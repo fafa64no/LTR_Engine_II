@@ -1,0 +1,4 @@
+C:/Users/sebas/CLionProjects/LTR_Engine_II/cmake-build-debug/CMakeFiles/LTR_Engine_II.dir
+C:/Users/sebas/CLionProjects/LTR_Engine_II/cmake-build-debug/CMakeFiles/copy_assets.dir
+C:/Users/sebas/CLionProjects/LTR_Engine_II/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/sebas/CLionProjects/LTR_Engine_II/cmake-build-debug/CMakeFiles/rebuild_cache.dir
