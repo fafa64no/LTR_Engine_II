@@ -18,9 +18,14 @@ Sprite::Sprite(Texture* texture, const glm::vec2 position, const glm::vec2 size)
     this->shader = basicSpriteShader;
     this->position = position;
     this->size = size;
+    this->target = nullptr;
 }
 
 void Sprite::draw() {
+    if (this->target != nullptr) {
+        this->position.x = target->getSpriteX();
+        this->position.y = target->getSpriteY();
+    }
     this->vao->bind();
     this->texture->bind();
     this->shader->use();

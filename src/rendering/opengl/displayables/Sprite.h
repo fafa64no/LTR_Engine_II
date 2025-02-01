@@ -10,6 +10,7 @@
 #include <Shader.h>
 
 #include "Displayable.h"
+#include "SpriteTarget.h"
 
 class Sprite : Displayable {
 public:
@@ -22,6 +23,7 @@ protected:
     Texture* texture;
     Shader* shader;
     glm::vec2 position{}, size{};
+    SpriteTarget* target;
 };
 
 

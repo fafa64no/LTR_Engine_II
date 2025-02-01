@@ -6,6 +6,8 @@
 
 #include <iostream>
 
+int log_pos = 0;
+
 void log(int level, const char* msg) {
     switch (level) {
         case LOG_DEBUG: {
@@ -25,7 +27,7 @@ void log(int level, const char* msg) {
         }
         case LOG_ERROR: {
             if (doNotLogError) break;
-            std::cerr << "ERROR : " << msg << std::endl;
+            std::cerr << "ERROR : " << msg << " at pos " << log_pos << std::endl;
             break;
         }
         case LOG_FATAL: {

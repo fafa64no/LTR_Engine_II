@@ -22,6 +22,8 @@
     exit(EXIT_FAILURE);                                             \
 }
 
+extern int log_pos;
+
 static bool doNotLogDefault = false;
 static bool doNotLogDebug = false;
 static bool doNotLogInfo = true;

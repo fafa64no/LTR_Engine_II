@@ -14,10 +14,13 @@ enum tex_type {
     TEX_COUNT
 };
 
+extern std::string texNames[TEX_COUNT];
+
 extern Texture* faridTexture;
 extern Texture* ltrTexture;
 extern Texture* frameTexture;
 
 void loadTextures();
+void loadTextureNames();
 
 #endif //TEXTURES_H

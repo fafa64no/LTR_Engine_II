@@ -10,7 +10,7 @@ Sprite* test;
 void initUIElements() {
   test = new Sprite(
     ltrTexture,
-    glm::vec2(0.5, 0),
-    glm::vec2(0.1, 0.1)
+    glm::vec2(0.5, 0.5),
+    glm::vec2(0.7, 0.7)
   );
 }
