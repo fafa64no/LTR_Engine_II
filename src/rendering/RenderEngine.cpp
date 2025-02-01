@@ -12,7 +12,7 @@
 
 RenderEngine::RenderEngine() {
     std::cout << "Creating Render Engine" << std::endl;
-    platform_create_window(1080,724,"Grrrrrrr");
+    platform_create_window(1980,1080,"Grrrrrrr");
     maxWindowSize = glm::ivec2(1980,1080);
     glInit();
 }

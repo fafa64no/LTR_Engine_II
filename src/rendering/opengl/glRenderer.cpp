@@ -130,6 +130,12 @@ void glWorldPostProcessing() {
 
 void glRenderUI() {
     for (int i = 0; i < UI_SPRITE_COUNT; i++) {
+        if (ui_sprites[i] == nullptr) continue;
         ui_sprites[i]->draw();
+    }
+
+    for (const auto sprite : ui_additional_sprites) {
+        if (sprite == nullptr) continue;
+        sprite->draw();
     }
 }

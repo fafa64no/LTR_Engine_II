@@ -44,7 +44,7 @@
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 78,
+				"line" : 79,
 				"parent" : 0
 			},
 			{
@@ -140,6 +140,10 @@
 				{
 					"backtrace" : 5,
 					"path" : "C:/Users/sebas/CLionProjects/LTR_Engine_II/src/utils"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "C:/Users/sebas/CLionProjects/LTR_Engine_II/src/utils/config"
 				},
 				{
 					"backtrace" : 5,

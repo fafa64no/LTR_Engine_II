@@ -64,6 +64,7 @@ target_include_directories(LTR_Engine_II PRIVATE
         src/rendering/opengl/displayables/
         src/rendering/opengl/ui/
         src/utils/
+        src/utils/config/
         src/utils/logging/
         src/utils/file_io/
         src/platform/
