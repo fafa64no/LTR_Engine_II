@@ -12,7 +12,7 @@
 
 RenderEngine::RenderEngine() {
     std::cout << "Creating Render Engine" << std::endl;
-    platform_create_window(800,600,"Grrrrrrr");
+    platform_create_window(1080,724,"Grrrrrrr");
     maxWindowSize = glm::ivec2(1980,1080);
     glInit();
 }
@@ -31,7 +31,7 @@ RenderEngine* RenderEngine::getInstance() {
 void RenderEngine::update(double deltaTime_ms) {
     platform_update_window();
     windowSize = platform_get_window_size();
-    aspectRatio = (float) windowSize.x / (float) windowSize.y;
+    aspectRatio = static_cast<float>(windowSize.x) / static_cast<float>(windowSize.y);
     glRender();
     platform_swap_buffers();
 }

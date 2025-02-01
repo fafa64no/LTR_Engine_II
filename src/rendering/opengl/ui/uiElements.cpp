@@ -5,12 +5,14 @@
 #include "uiElements.h"
 #include "textures.h"
 
-Sprite* test;
+Sprite** ui_sprites;
 
 void initUIElements() {
-  test = new Sprite(
-    ltrTexture,
-    glm::vec2(0.5, 0.5),
-    glm::vec2(0.7, 0.7)
+  ui_sprites = static_cast<Sprite **>(malloc(sizeof(Sprite *) * UI_SPRITE_COUNT));
+
+  ui_sprites[UI_SPRITE_BACKGROUND] = new Sprite(
+    backgroundTexture,
+    glm::vec3(0, 0, -1),
+    glm::vec2(1, 1)
   );
 }

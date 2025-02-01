@@ -114,7 +114,7 @@ void glRenderWorld() {
     glEnable(GL_DEPTH_TEST);
     glClearScreen();
     glRenderSkyBox();
-    ///TODO draw displayables
+    ///TODO draw world displayables
     glBindFramebuffer(GL_FRAMEBUFFER,0);
     glWorldPostProcessing();
     glRenderUI();
@@ -129,5 +129,7 @@ void glWorldPostProcessing() {
 }
 
 void glRenderUI() {
-    test->draw();
+    for (int i = 0; i < UI_SPRITE_COUNT; i++) {
+        ui_sprites[i]->draw();
+    }
 }

@@ -9,6 +9,7 @@
 Texture* faridTexture;
 Texture* ltrTexture;
 Texture* frameTexture;
+Texture* backgroundTexture;
 
 std::string texNames[TEX_COUNT];
 
@@ -19,6 +20,7 @@ void loadTextures() {
     faridTexture = new Texture(texture_ids[TEX_FARID], "farid.png", GL_RGBA);
     ltrTexture = new Texture(texture_ids[TEX_LTR], "LTR.png", GL_RGBA);
     frameTexture = new Texture(texture_ids[TEX_FRAME_TEXTURE], RenderEngine::getMaxWindowSize(), GL_RGB);
+    backgroundTexture = new Texture(texture_ids[TEX_BACKGROUND], "background.jpg", GL_RGB);
 }
 
 void loadTextureNames() {

@@ -7,7 +7,12 @@
 
 #include "Sprite.h"
 
-extern Sprite* test;
+enum ui_sprite_type {
+    UI_SPRITE_BACKGROUND,
+    UI_SPRITE_COUNT
+};
+
+extern Sprite** ui_sprites;
 
 void initUIElements();
 

@@ -14,7 +14,7 @@
 
 class Sprite : Displayable {
 public:
-    Sprite(Texture* texture, glm::vec2 position, glm::vec2 size);
+    Sprite(Texture* texture, glm::vec3 position, glm::vec2 size);
     void draw() override;
     void load() override;
     void unload() override;
@@ -22,7 +22,8 @@ protected:
     VAO* vao;
     Texture* texture;
     Shader* shader;
-    glm::vec2 position{}, size{};
+    glm::vec3 position{};
+    glm::vec2 size{};
     SpriteTarget* target;
 };
 

@@ -12,7 +12,7 @@
 #include "RenderEngine.h"
 
 
-Sprite::Sprite(Texture* texture, const glm::vec2 position, const glm::vec2 size) {
+Sprite::Sprite(Texture* texture, const glm::vec3 position, const glm::vec2 size) {
     this->vao = quadVAO;
     this->texture = texture;
     this->shader = basicSpriteShader;
@@ -30,7 +30,7 @@ void Sprite::draw() {
     this->texture->bind();
     this->shader->use();
     glm::mat4 model = glm::mat4(1.0f);
-    model = translate(model, glm::vec3(this->position.x,this->position.y,-1));
+    model = translate(model, this->position);
     model = scale(model, glm::vec3(this->size.x, this->size.y, 1));
     this->shader->setMat4("model", model);
     glDrawArrays(GL_TRIANGLES, 0, VERTEX_PER_QUAD);
