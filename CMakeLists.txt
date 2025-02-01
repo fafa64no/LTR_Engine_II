@@ -24,6 +24,7 @@ target_sources(LTR_Engine_II PRIVATE
 target_sources(LTR_Engine_II PRIVATE
         src/game/GameEngine.cpp
         src/game/board/Chessboard.cpp
+        src/game/board/piece_loader.cpp
         src/game/characters/characters_List.cpp
         src/game/characters/pieces/Pieces.cpp
         src/game/characters/pieces/pieces_List.cpp

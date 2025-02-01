@@ -18,10 +18,12 @@ using namespace std;
 class Chessboard {
     private:
         vector<vector<Pieces*>> grid;
+        static Chessboard* instance;
     protected:
         vector<EffectInstance> EffectOnPieces;
     public:
-        explicit Chessboard(int size) : grid(size, vector<Pieces*>(size, nullptr)) {};
+        explicit Chessboard(int size) : grid(size, vector<Pieces*>(size, nullptr)) { instance = this;};
+        static Chessboard* getInstance();
         void placePiece(int coordX, int coordY, Pieces* piece);
         bool isMovePossible(Pieces* piece,int to_coordX, int to_coordY) const; // vérifie si le movement est dans le plateau, qu'il n'est pas sur un allié et que la pièce possède ce movement
         vector<pair<int, int>> getValidMoves(Pieces* piece) const;

@@ -4,10 +4,24 @@
 
 #include "GameEngine.h"
 
+#include "effect_List.h"
+#include "characters_List.h"
+#include "pieces_List.h"
+#include "game_cfg.h"
+#include "log.h"
+#include "piece_loader.h"
+
 #include <iostream>
+#include <Nemo_Marine.h>
 
 GameEngine::GameEngine() {
     std::cout << "Creating Game Engine" << std::endl;
+    loadEffectList();
+    loadCharactersList();
+    loadPiecesList();
+    context.chessboard = Chessboard::getInstance();
+    init_pieces();
+    context.chessboard->displayBoard();
 }
 
 GameEngine::~GameEngine() {

@@ -5,7 +5,16 @@
 #include "Chessboard.h"
 #include "Characters_List.h"
 #include "Pawn.h"
+#include "game_cfg.h"
 
+Chessboard* Chessboard::instance = nullptr;
+
+Chessboard* Chessboard::getInstance() {
+    if (!instance) {
+        return new Chessboard(BOARD_SIZE);
+    }
+    return instance;
+}
 
 void Chessboard::placePiece(int to_coordX,int to_coordY, Pieces* piece) {
     if (to_coordX >= 0 && to_coordX < grid.size() && to_coordY >= 0 && to_coordY < grid.size()) {
