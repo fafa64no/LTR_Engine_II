@@ -69,7 +69,7 @@ int platform_create_window(int width, int height, const char* title){
     wc.lpszClassName    = title;
     wc.lpfnWndProc      = windows_window_callback;
     if (!RegisterClassA(&wc)) return false;
-    int dwStyle = WS_MAXIMIZEBOX;
+    int dwStyle = WS_MAXIMIZE;
     PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB;
     PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB;
     //Fake Window initialisation

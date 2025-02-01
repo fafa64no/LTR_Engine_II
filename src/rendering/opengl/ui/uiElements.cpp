@@ -12,7 +12,13 @@ void initUIElements() {
 
   ui_sprites[UI_SPRITE_BACKGROUND] = new Sprite(
     backgroundTexture,
-    glm::vec3(0, 0, -1),
+    glm::vec3(0, 0, -0.1),
     glm::vec2(1, 1)
+  );
+
+  ui_sprites[UI_SPRITE_BOARD] = new Sprite(
+    boardTexture,
+    glm::vec3(0, 0, -0.3),
+    glm::vec2(1080.0/1920.0, 1)
   );
 }
