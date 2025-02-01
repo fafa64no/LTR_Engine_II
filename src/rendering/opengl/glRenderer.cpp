@@ -134,7 +134,7 @@ void glRenderUI() {
         ui_sprites[i]->draw();
     }
 
-    for (const auto sprite : ui_additional_sprites) {
+    for (Sprite* sprite : ui_additional_sprites) {
         if (sprite == nullptr) continue;
         sprite->draw();
     }

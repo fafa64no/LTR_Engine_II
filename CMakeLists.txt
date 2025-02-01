@@ -23,6 +23,24 @@ target_sources(LTR_Engine_II PRIVATE
 
 target_sources(LTR_Engine_II PRIVATE
         src/game/GameEngine.cpp
+        src/game/board/Chessboard.cpp
+        src/game/characters/characters_List.cpp
+        src/game/characters/pieces/Pieces.cpp
+        src/game/characters/pieces/pieces_List.cpp
+        src/game/characters/pieces/bishop/Bishop.cpp
+        src/game/characters/pieces/bishop/Medusa_Saber.cpp
+        src/game/characters/pieces/king/King.cpp
+        src/game/characters/pieces/king/Artoria.cpp
+        src/game/characters/pieces/knight/Knight.cpp
+        src/game/characters/pieces/knight/Ushiwakamaru.cpp
+        src/game/characters/pieces/pawn/Pawn.cpp
+        src/game/characters/pieces/pawn/Nemo_Marine.cpp
+        src/game/characters/pieces/queen/Queen.cpp
+        src/game/characters/pieces/queen/Sesshoin_Kiara.cpp
+        src/game/characters/pieces/rook/Rook.cpp
+        src/game/characters/pieces/rook/Arceuid.cpp
+        src/game/effects/effect_List.cpp
+        src/game/effects/EffectHandler.cpp
         src/physics/PhysicsEngine.cpp
         src/rendering/RenderEngine.cpp
         src/rendering/opengl/glFunctions.cpp
@@ -55,6 +73,16 @@ endif (UNIX)
 
 target_include_directories(LTR_Engine_II PRIVATE
         src/game/
+        src/game/board/
+        src/game/characters/
+        src/game/characters/pieces/
+        src/game/characters/pieces/bishop/
+        src/game/characters/pieces/king/
+        src/game/characters/pieces/knight/
+        src/game/characters/pieces/pawn/
+        src/game/characters/pieces/queen/
+        src/game/characters/pieces/rook/
+        src/game/effects/
         src/physics/
         src/rendering/
         src/rendering/opengl/
