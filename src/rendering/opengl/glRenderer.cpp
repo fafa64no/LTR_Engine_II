@@ -12,6 +12,7 @@
 #include "vaos.h"
 #include "textures.h"
 #include "uiElements.h"
+#include "piece_loader.h"
 
 #include "glm.hpp"
 
@@ -134,6 +135,7 @@ void glRenderUI() {
         ui_sprites[i]->draw();
     }
 
+    if (!didPiecesGetInitiated) return;
     for (Sprite* sprite : ui_additional_sprites) {
         if (sprite == nullptr) continue;
         sprite->draw();

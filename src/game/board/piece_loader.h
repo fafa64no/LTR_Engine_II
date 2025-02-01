@@ -8,6 +8,8 @@
 #include <Characters_List.h>
 #include <Pieces.h>
 
+extern bool didPiecesGetInitiated;
+
 Characters_List choose_pawn();
 Characters_List choose_knight();
 Characters_List choose_bishop();

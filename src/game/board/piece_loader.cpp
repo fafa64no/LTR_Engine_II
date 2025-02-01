@@ -19,6 +19,8 @@
 #include <Sesshoin_Kiara.h>
 #include <Ushiwakamaru.h>
 
+bool didPiecesGetInitiated = false;
+
 Characters_List choose_pawn() {
     int id_character = NEMO_MARINE;
     if constexpr (NOT_QUICK_TEST)
@@ -151,6 +153,8 @@ void init_pieces() {
     init_rooks();
     init_kings();
     init_queens();
+
+    didPiecesGetInitiated = true;
 }
 
 void init_pawns() {

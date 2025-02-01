@@ -7,7 +7,15 @@
 #include <utility>
 #include "Effect_List.h"
 //Pieces::Pieces(string name) : name(std::move(name)) {}
-Pieces::~Pieces() = default;
+
+float Pieces::getSpriteX() {
+    return (-0.875f + 0.25f * static_cast<float>(coordY)) * 1080.0f / 1920.0f;
+}
+
+float Pieces::getSpriteY() {
+    return -0.875f + 0.25f * static_cast<float>(coordX);
+}
+
 
 string Pieces::getName() {
     return name;

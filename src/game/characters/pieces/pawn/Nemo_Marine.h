@@ -4,6 +4,10 @@
 
 #ifndef NEMO_MARINE_H
 #define NEMO_MARINE_H
+
+#include <textures.h>
+#include <uiElements.h>
+
 #include "Pawn.h"
 
 
@@ -14,6 +18,7 @@ class Nemo_Marine final: public Pawn  {
         Nemo_Marine(int startX, int startY, bool white, Characters_List hero,
             Pieces_List pieces_root)
             : Pawn(startX, startY, white, hero, pieces_root) {
+            addAdditionalUIElement(nemoMarxTexture, glm::vec2(0.1 * 1080.0/1920.0, 0.1), this);
         }
 
         [[nodiscard]] vector<Effect_List> getCasterEffects() const override;

@@ -6,7 +6,6 @@
 #define UIELEMENTS_H
 
 #include "Sprite.h"
-#include "rendering_cfg.h"
 
 #include <vector>
 
@@ -20,6 +19,7 @@ extern Sprite** ui_sprites;
 extern std::vector<Sprite*> ui_additional_sprites;
 
 void initUIElements();
-void addAdditionalUIElements(Sprite* sprite);
+void addAdditionalUIElement(Sprite* sprite);
+void addAdditionalUIElement(Texture* texture, glm::vec2 size, SpriteTarget* target);
 
 #endif //UIELEMENTS_H

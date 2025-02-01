@@ -4,6 +4,7 @@
 
 #include "uiElements.h"
 #include "textures.h"
+#include "rendering_cfg.h"
 
 Sprite** ui_sprites;
 std::vector<Sprite*> ui_additional_sprites;
@@ -24,6 +25,10 @@ void initUIElements() {
   );
 }
 
-void addAdditionalUIElements(Sprite* sprite) {
+void addAdditionalUIElement(Sprite* sprite) {
   ui_additional_sprites.push_back(sprite);
+}
+
+void addAdditionalUIElement(Texture* texture, glm::vec2 size, SpriteTarget* target) {
+  addAdditionalUIElement(new Sprite(texture, size, target));
 }

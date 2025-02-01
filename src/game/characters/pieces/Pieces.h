@@ -8,6 +8,8 @@
 #include <utility>
 #include <vector>
 #include <memory>
+#include <SpriteTarget.h>
+
 #include "Pieces_List.h"
 #include "Characters_List.h"
 #include "Effect_List.h"
@@ -17,7 +19,7 @@
 using namespace std;
 
 
-class Pieces {
+class Pieces : public SpriteTarget {
     protected:
         int coordX;
         int coordY;
@@ -37,7 +39,10 @@ class Pieces {
 
         //explicit Pieces(string name);
 
-        virtual ~Pieces();
+        ~Pieces() override = default;;
+
+        float getSpriteX() override;
+        float getSpriteY() override;
 
         [[nodiscard]] string getName();
         [[nodiscard]] int getCoordX() const;
