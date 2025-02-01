@@ -16,7 +16,6 @@ float Pieces::getSpriteY() {
     return -0.875f + 0.25f * static_cast<float>(coordX);
 }
 
-
 string Pieces::getName() {
     return name;
 }

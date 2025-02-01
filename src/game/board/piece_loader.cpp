@@ -140,7 +140,7 @@ Pieces* get_piece(int x, int y, bool isWhite, Characters_List character) {
         //break;
         default:
         piece = new Nemo_Marine(x,y,isWhite,character,PAWN);
-        log(LOG_ERROR, "piece not found");
+        log(LOG_ERROR, "Piece type not found in piece_loader.hpp");
         break;
     }
     return piece;

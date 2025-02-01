@@ -10,7 +10,6 @@
 #include "piece_loader.h"
 
 #include <iostream>
-#include <Nemo_Marine.h>
 
 GameEngine::GameEngine() {
     std::cout << "Creating Game Engine" << std::endl;
@@ -19,7 +18,6 @@ GameEngine::GameEngine() {
     loadPiecesList();
     context.chessboard = Chessboard::getInstance();
     init_pieces();
-    //context.chessboard->displayBoard();
 }
 
 GameEngine::~GameEngine() {
