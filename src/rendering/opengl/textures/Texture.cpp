@@ -45,7 +45,7 @@ Texture::Texture(const unsigned int textureID, const std::string &textureName, c
     glTexImage2D(
         GL_TEXTURE_2D,
         0,
-        GL_RGB,
+        GL_RGBA,
         width,
         height,
         0,

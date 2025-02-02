@@ -82,3 +82,7 @@
 105	1012	7601578079535970	CMakeFiles/LTR_Engine_II.dir/src/game/GameEngine.cpp.obj	563d23d370ed0bc0
 109	1310	7601578079577260	CMakeFiles/LTR_Engine_II.dir/src/game/board/piece_loader.cpp.obj	b1c32484094ad254
 1310	1610	7601578091585060	LTR_Engine_II.exe	7027a31a7fb4efc6
+10	94	7601579503921451	CMakeFiles/copy_assets	6428cfcc881b4d5c
+10	94	7601579503921451	C:/Users/sebas/CLionProjects/LTR_Engine_II/cmake-build-debug/CMakeFiles/copy_assets	6428cfcc881b4d5c
+95	2043	7601579504759622	CMakeFiles/LTR_Engine_II.dir/src/rendering/opengl/textures/Texture.cpp.obj	bfc79f995f840bda
+2043	2352	7601579524251857	LTR_Engine_II.exe	7027a31a7fb4efc6
