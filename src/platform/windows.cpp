@@ -10,6 +10,8 @@
 #include "glcorearb.h"
 #include "wglext.h"
 
+#include "mouseInputs.h"
+
 
 extern "C" {
     __declspec(dllexport) unsigned long NvOptimusEnablement = 0x00000001; // NVIDIA
@@ -44,13 +46,64 @@ LRESULT CALLBACK windows_window_callback(HWND curWindow, UINT msg, WPARAM wParam
             // ???
             break;
         }
-        case WM_LBUTTONDOWN:
-        case WM_RBUTTONDOWN:
-        case WM_MBUTTONDOWN:
-        case WM_LBUTTONUP:
-        case WM_RBUTTONUP:
+        case WM_LBUTTONDOWN:{
+            POINT point = {};
+            GetCursorPos(&point);
+            const auto pos = glm::vec2(
+                (float)point.x/(float)currentWindowSize.x,
+                (float)point.y/(float)currentWindowSize.y
+            );
+            leftClickDown(pos);
+            break;
+        }
+        case WM_RBUTTONDOWN:{
+            POINT point = {};
+            GetCursorPos(&point);
+            const auto pos = glm::vec2(
+                (float)point.x/(float)currentWindowSize.x,
+                (float)point.y/(float)currentWindowSize.y
+            );
+            rightClickDown(pos);
+            break;
+        }
+        case WM_MBUTTONDOWN:{
+            POINT point = {};
+            GetCursorPos(&point);
+            const auto pos = glm::vec2(
+                (float)point.x/(float)currentWindowSize.x,
+                (float)point.y/(float)currentWindowSize.y
+            );
+            middleClickDown(pos);
+            break;
+        }
+        case WM_LBUTTONUP:{
+            POINT point = {};
+            GetCursorPos(&point);
+            const auto pos = glm::vec2(
+                (float)point.x/(float)currentWindowSize.x,
+                (float)point.y/(float)currentWindowSize.y
+            );
+            leftClickUp(pos);
+            break;
+        }
+        case WM_RBUTTONUP:{
+            POINT point = {};
+            GetCursorPos(&point);
+            const auto pos = glm::vec2(
+                (float)point.x/(float)currentWindowSize.x,
+                (float)point.y/(float)currentWindowSize.y
+            );
+            rightClickUp(pos);
+            break;
+        }
         case WM_MBUTTONUP:{
-            // ??????
+            POINT point = {};
+            GetCursorPos(&point);
+            const auto pos = glm::vec2(
+                (float)point.x/(float)currentWindowSize.x,
+                (float)point.y/(float)currentWindowSize.y
+            );
+            middleClickUp(pos);
             break;
         }
         default:{

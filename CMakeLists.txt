@@ -42,6 +42,7 @@ target_sources(LTR_Engine_II PRIVATE
         src/game/characters/pieces/rook/Arceuid.cpp
         src/game/effects/effect_List.cpp
         src/game/effects/EffectHandler.cpp
+        src/game/inputs/mouseInputs.cpp
         src/physics/PhysicsEngine.cpp
         src/rendering/RenderEngine.cpp
         src/rendering/opengl/glFunctions.cpp
@@ -84,6 +85,7 @@ target_include_directories(LTR_Engine_II PRIVATE
         src/game/characters/pieces/queen/
         src/game/characters/pieces/rook/
         src/game/effects/
+        src/game/inputs/
         src/physics/
         src/rendering/
         src/rendering/opengl/
