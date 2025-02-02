@@ -5,6 +5,7 @@
 #include "uiElements.h"
 #include "textures.h"
 #include "rendering_cfg.h"
+#include "RenderEngine.h"
 
 Sprite** ui_sprites;
 std::vector<Sprite*> ui_additional_sprites;
@@ -21,7 +22,7 @@ void initUIElements() {
   ui_sprites[UI_SPRITE_BOARD] = new Sprite(
     boardTexture,
     glm::vec3(0, 0, LAYER_BOARD),
-    glm::vec2(1080.0/1920.0, 1)
+    glm::vec2(RenderEngine::getWindowInverseAspectRatio(), 1)
   );
 }
 

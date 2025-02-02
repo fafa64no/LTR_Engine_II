@@ -7,6 +7,7 @@
 
 #include <textures.h>
 #include <uiElements.h>
+#include "RenderEngine.h"
 
 #include "Rook.h"
 
@@ -18,7 +19,11 @@ class Arceuid final: public Rook{
         Arceuid(int startX, int startY, bool white, Characters_List hero,
             Pieces_List pieces_root)
             : Rook(startX, startY, white, hero, pieces_root) {
-            addAdditionalUIElement(arcueidTexture, glm::vec2(0.1 * 1080.0/1920.0, 0.1), this);
+            addAdditionalUIElement(
+                arcueidTexture,
+                glm::vec2(0.1 * RenderEngine::getWindowInverseAspectRatio(), 0.1),
+                this
+            );
         }
 
         [[nodiscard]] vector<Effect_List> getCasterEffects() const override;

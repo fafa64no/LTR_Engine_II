@@ -7,6 +7,7 @@
 
 #include <textures.h>
 #include <uiElements.h>
+#include "RenderEngine.h"
 
 #include "Bishop.h"
 
@@ -18,7 +19,11 @@ class Medusa_Saber final : public Bishop{
         Medusa_Saber(int startX, int startY, bool white, Characters_List hero,
              Pieces_List pieces_root)
             : Bishop(startX, startY, white, hero, pieces_root) {
-            addAdditionalUIElement(medusaTexture, glm::vec2(0.1 * 1080.0/1920.0, 0.1), this);
+            addAdditionalUIElement(
+                medusaTexture,
+                glm::vec2(0.1 * RenderEngine::getWindowInverseAspectRatio(), 0.1),
+                this
+            );
         }
 
         [[nodiscard]] vector<Effect_List> getCasterEffects() const override;
