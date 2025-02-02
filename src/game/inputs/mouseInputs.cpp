@@ -6,6 +6,7 @@
 
 #include "log.h"
 #include <iostream>
+#include "platform.h"
 
 /*
  * clickDown is called upon pressing the button
@@ -16,27 +17,48 @@
  * (1, 1) corresponds to the bottom right corner
  */
 
-void leftClickUp(glm::vec2 mousePos) {
+bool isLeftClickHeld = false;
+bool isRightClickHeld = false;
+bool isMiddleClickHeld = false;
 
+void leftClickUp(glm::vec2 mousePos) {
+    isLeftClickHeld = true;
 }
 
 void leftClickDown(glm::vec2 mousePos) {
-
+    isLeftClickHeld = false;
 }
 
 void rightClickUp(glm::vec2 mousePos) {
-
+    isRightClickHeld = true;
 }
 
 void rightClickDown(glm::vec2 mousePos) {
-
+    isRightClickHeld = false;
 }
 
 void middleClickUp(glm::vec2 mousePos) {
-
+    isMiddleClickHeld = true;
 }
 
 void middleClickDown(glm::vec2 mousePos) {
-
+    isMiddleClickHeld = false;
 }
+
+glm::vec2 getMousePos() {
+    return platform_get_mouse_position();
+}
+
+bool isLeftClickBeingHeld() {
+    return isLeftClickHeld;
+}
+
+bool isRightClickBeingHeld() {
+    return isRightClickHeld;
+}
+
+bool isMiddleClickBeingHeld() {
+    return isMiddleClickHeld;
+}
+
 

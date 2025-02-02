@@ -71,3 +71,12 @@
 11	107	7601973737193069	C:/Users/sebas/CLionProjects/LTR_Engine_II/cmake-build-debug/CMakeFiles/copy_assets	6428cfcc881b4d5c
 107	937	7601973738147279	CMakeFiles/LTR_Engine_II.dir/src/game/GameEngine.cpp.obj	d2b1173a836bd351
 937	1243	7601973746438631	LTR_Engine_II.exe	f864aae15bce2e3a
+11	99	7601981433188403	CMakeFiles/copy_assets	6428cfcc881b4d5c
+11	99	7601981433188403	C:/Users/sebas/CLionProjects/LTR_Engine_II/cmake-build-debug/CMakeFiles/copy_assets	6428cfcc881b4d5c
+108	725	7601981434160551	CMakeFiles/LTR_Engine_II.dir/src/game/inputs/keys.cpp.obj	800dec0065947669
+104	1171	7601981434120545	CMakeFiles/LTR_Engine_II.dir/src/game/inputs/mouseInputs.cpp.obj	f0955ef1bf3229e
+99	1180	7601981434074296	CMakeFiles/LTR_Engine_II.dir/src/game/GameEngine.cpp.obj	d2b1173a836bd351
+119	2206	7601981434270737	CMakeFiles/LTR_Engine_II.dir/src/rendering/opengl/glFunctions.cpp.obj	8a575e40048ee377
+125	2241	7601981434325956	CMakeFiles/LTR_Engine_II.dir/src/platform/windows.cpp.obj	ed48460744e6be8b
+113	2597	7601981434209083	CMakeFiles/LTR_Engine_II.dir/src/rendering/RenderEngine.cpp.obj	3f7c60289c455806
+2597	2916	7601981459048380	LTR_Engine_II.exe	f864aae15bce2e3a

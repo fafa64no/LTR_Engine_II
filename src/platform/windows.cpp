@@ -233,6 +233,16 @@ glm::ivec2 platform_get_window_size() {
     return currentWindowSize;
 }
 
+glm::vec2 platform_get_mouse_position() {
+    POINT point = {};
+    GetCursorPos(&point);
+    const auto pos = glm::vec2(
+        (float)point.x/(float)currentWindowSize.x,
+        (float)point.y/(float)currentWindowSize.y
+    );
+    return pos;
+}
+
 void* platform_load_gl_function(char* funName){
     PROC proc = wglGetProcAddress(funName);
     if (!proc){
