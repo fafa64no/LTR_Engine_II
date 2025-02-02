@@ -8,6 +8,7 @@
 #include "characters_List.h"
 #include "pieces_List.h"
 #include "piece_loader.h"
+#include  "keys.h"
 
 #include <iostream>
 
@@ -18,6 +19,7 @@ GameEngine::GameEngine() {
     loadPiecesList();
     context.chessboard = Chessboard::getInstance();
     init_pieces();
+    keys_init();
 }
 
 GameEngine::~GameEngine() {
@@ -32,5 +34,6 @@ GameEngine* GameEngine::getInstance() {
 }
 
 void GameEngine::update(double deltaTime_ms) {
-
+    ///TODO do stuff
+    keys_update();
 }

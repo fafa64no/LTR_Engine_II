@@ -43,6 +43,8 @@ target_sources(LTR_Engine_II PRIVATE
         src/game/effects/effect_List.cpp
         src/game/effects/EffectHandler.cpp
         src/game/inputs/mouseInputs.cpp
+        src/game/inputs/Key.cpp
+        src/game/inputs/keys.cpp
         src/physics/PhysicsEngine.cpp
         src/rendering/RenderEngine.cpp
         src/rendering/opengl/glFunctions.cpp
