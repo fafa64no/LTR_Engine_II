@@ -207,12 +207,12 @@ void init_kings() {
     Characters_List character = choose_king();
     add_piece_to_board(0,3,false,character);
     character = choose_king();
-    add_piece_to_board(BOARD_SIZE-1,4,false,character);
+    add_piece_to_board(BOARD_SIZE-1,3,false,character);
 }
 
 void init_queens() {
     Characters_List character = choose_queen();
     add_piece_to_board(0,4,false,character);
     character = choose_queen();
-    add_piece_to_board(BOARD_SIZE-1,3,false,character);
+    add_piece_to_board(BOARD_SIZE-1,4,false,character);
 }
