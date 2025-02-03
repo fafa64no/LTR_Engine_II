@@ -8,6 +8,7 @@
 #include <textures.h>
 #include <uiElements.h>
 #include "RenderEngine.h"
+#include "rendering_cfg.h"
 
 #include "Queen.h"
 
@@ -20,8 +21,8 @@ class Sesshoin_Kiara final : public Queen{
             Pieces_List pieces_root)
             : Queen(startX, startY, white, hero, pieces_root) {
             addAdditionalUIElement(
-                kiaraTexture,
-                glm::vec2(0.1 * RenderEngine::getWindowInverseAspectRatio(), 0.1),
+                faridTexture,
+                glm::vec2(PIECE_SIZE * RenderEngine::getWindowInverseAspectRatio(), PIECE_SIZE),
                 this
             );
         }

@@ -8,6 +8,7 @@
 #include <textures.h>
 #include <uiElements.h>
 #include "RenderEngine.h"
+#include "rendering_cfg.h"
 
 #include "Rook.h"
 
@@ -21,7 +22,7 @@ class Arceuid final: public Rook{
             : Rook(startX, startY, white, hero, pieces_root) {
             addAdditionalUIElement(
                 arcueidTexture,
-                glm::vec2(0.1 * RenderEngine::getWindowInverseAspectRatio(), 0.1),
+                glm::vec2(PIECE_SIZE * RenderEngine::getWindowInverseAspectRatio(), PIECE_SIZE),
                 this
             );
         }

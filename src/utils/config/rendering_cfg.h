@@ -9,4 +9,6 @@
 #define LAYER_BOARD (-0.3)
 #define LAYER_PIECES (-0.5)
 
+#define PIECE_SIZE (0.125)
+
 #endif //RENDERING_CFG_H

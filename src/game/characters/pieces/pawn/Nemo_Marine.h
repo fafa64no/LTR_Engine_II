@@ -8,6 +8,7 @@
 #include <textures.h>
 #include <uiElements.h>
 #include "RenderEngine.h"
+#include "rendering_cfg.h"
 
 #include "Pawn.h"
 
@@ -21,7 +22,7 @@ class Nemo_Marine final: public Pawn  {
             : Pawn(startX, startY, white, hero, pieces_root) {
             addAdditionalUIElement(
                 nemoMarxTexture,
-                glm::vec2(0.1 * RenderEngine::getWindowInverseAspectRatio(), 0.1),
+                glm::vec2(PIECE_SIZE * RenderEngine::getWindowInverseAspectRatio(), PIECE_SIZE),
                 this
             );
         }

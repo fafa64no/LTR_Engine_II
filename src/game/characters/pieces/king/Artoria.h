@@ -8,6 +8,7 @@
 #include <textures.h>
 #include <uiElements.h>
 #include "RenderEngine.h"
+#include "rendering_cfg.h"
 
 #include "King.h"
 
@@ -21,7 +22,7 @@ class Artoria final: public King{
             : King(startX, startY, white, hero, pieces_root) {
             addAdditionalUIElement(
                 artoriaTexture,
-                glm::vec2(0.1 * RenderEngine::getWindowInverseAspectRatio(), 0.1),
+                glm::vec2(PIECE_SIZE * RenderEngine::getWindowInverseAspectRatio(), PIECE_SIZE),
                 this
             );
         }
