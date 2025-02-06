@@ -5,6 +5,7 @@
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
 #include <iostream>
+#include <vec2.hpp>
 #include <vector>
 
 #include "Effect_List.h"
@@ -16,13 +17,15 @@ using namespace std;
 
 
 class Chessboard {
-    private:
         vector<vector<Pieces*>> grid;
         static Chessboard* instance;
-    protected:
+        int size;
         vector<EffectInstance> EffectOnPieces;
     public:
-        explicit Chessboard(int size) : grid(size, vector<Pieces*>(size, nullptr)) { instance = this;};
+        explicit Chessboard(const int size) : grid(size, vector<Pieces*>(size, nullptr)) {
+            instance = this;
+            this->size = size;
+        };
         static Chessboard* getInstance();
         void placePiece(int coordX, int coordY, Pieces* piece);
         bool isMovePossible(Pieces* piece,int to_coordX, int to_coordY) const; // vérifie si le movement est dans le plateau, qu'il n'est pas sur un allié et que la pièce possède ce movement
@@ -37,6 +40,7 @@ class Chessboard {
         bool isPathClear(int startX, int startY, int endX, int endY, Pieces* piece) const ;
         [[nodiscard]] bool isInGrid(int to_coordX, int to_coordY) const;
         [[nodiscard]] vector<vector<Pieces *>> getGrid() const;
+        bool getPosInBoard(glm::vec2 screenPos, glm::ivec2 &boardPos) const;
 };
 
 

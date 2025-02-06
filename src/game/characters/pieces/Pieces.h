@@ -30,9 +30,8 @@ class Pieces : public SpriteTarget {
         Characters_List characters;
         Pieces_List pieces_origin;
         string name;
-
     public:
-
+        bool isSelected = false;
 
         explicit Pieces(int startX, int startY, bool white, Characters_List hero, Pieces_List pieces_root)
         : coordX(startX), coordY(startY),isWhite(white) , characters(hero) , pieces_origin(pieces_root), name(Characters_List_to_string[characters]) {}
@@ -43,6 +42,9 @@ class Pieces : public SpriteTarget {
 
         float getSpriteX() override;
         float getSpriteY() override;
+        float getSpriteRotation() override;
+        glm::vec3 getFilterColor() override;
+        glm::vec4 getDefaultColor() override;
 
         [[nodiscard]] string getName();
         [[nodiscard]] int getCoordX() const;

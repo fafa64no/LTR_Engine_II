@@ -13,8 +13,24 @@ float Pieces::getSpriteX() {
 }
 
 float Pieces::getSpriteY() {
-    return -0.875f + 0.25f * static_cast<float>(coordX);
+    return 0.875f - 0.25f * static_cast<float>(coordX);
 }
+
+float Pieces::getSpriteRotation() {
+    return (isWhite) ? 0.0f : 180.0f;
+}
+
+glm::vec3 Pieces::getFilterColor() {
+    return glm::vec3();
+}
+
+glm::vec4 Pieces::getDefaultColor() {
+    if (isSelected)
+        return glm::vec4();
+    else
+        return glm::vec4(0.25f, 0.875f, 1.0f, 0.3f);
+}
+
 
 string Pieces::getName() {
     return name;

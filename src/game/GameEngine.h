@@ -17,9 +17,12 @@ public:
     ~GameEngine() override;
     static GameEngine* getInstance();
     void update(double deltaTime_ms) override;
+    void clickBoardAtPos(int x, int y);
 private:
     inline static GameEngine* instance = nullptr;
-    context_type context{nullptr};
+    context_type* context = new context_type();
+    bool receivedClick = false;
+    int lastClickX{-1}, lastClickY{-1};
 };
 
 

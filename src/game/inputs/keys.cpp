@@ -3,6 +3,9 @@
 //
 
 #include "keys.h"
+
+#include <log.h>
+
 #include "platform.h"
 
 Key* keys[KEY_COUNT];
