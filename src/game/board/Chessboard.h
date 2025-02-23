@@ -9,7 +9,7 @@
 #include <vec2.hpp>
 #include <vector>
 
-#include "Effect_List.h"
+#include "effect_List.h"
 #include "Pieces.h"
 
 using namespace std;

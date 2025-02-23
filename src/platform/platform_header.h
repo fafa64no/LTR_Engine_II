@@ -7,6 +7,27 @@
 
 #ifdef _WIN32
 #include <windows.h>
+#include "glcorearb.h"
+#elif __linux__
+
+#ifndef APIENTRY
+#define APIENTRY
+#endif
+//
+// #ifndef GLAPI
+// #define GLAPI extern
+// #endif
+
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+
+#undef None
+#undef Status
+
+#include "glcorearb.h"
+
+#include <GL/glx.h>
+#include <GL/glxext.h>
 #endif
 
 #endif //PLATFORM_HEADER_H

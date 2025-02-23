@@ -3,7 +3,7 @@
 //
 
 #include "Ushiwakamaru.h"
-#include "Context.h"
+#include "context.h"
 
 
 void Ushiwakamaru::setPieceGameMode(int piece_game_mode) {

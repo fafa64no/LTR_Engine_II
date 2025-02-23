@@ -5,7 +5,7 @@
 #ifndef GAMEENGINE_H
 #define GAMEENGINE_H
 
-#include <Context.h>
+#include <context.h>
 
 #include "Engine.h"
 

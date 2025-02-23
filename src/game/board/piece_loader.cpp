@@ -7,8 +7,6 @@
 #include <Arceuid.h>
 #include <Artoria.h>
 #include <Chessboard.h>
-#include <EffectHandler.h>
-#include <exponential.hpp>
 
 #include "game_cfg.h"
 #include "log.h"

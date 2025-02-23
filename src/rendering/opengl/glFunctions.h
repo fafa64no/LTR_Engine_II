@@ -7,8 +7,6 @@
 
 #include "platform_header.h"
 
-#include "glcorearb.h"
-
 void load_gl_functions();
 
 GLAPI GLuint APIENTRY glCreateProgram ();

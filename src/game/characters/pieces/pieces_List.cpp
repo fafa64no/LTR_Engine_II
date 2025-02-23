@@ -2,7 +2,7 @@
 // Created by david on 25/01/2025.
 //
 
-#include "Pieces_List.h"
+#include "pieces_List.h"
 
 #include "Pieces.h"
 string Pieces_List_to_string[PIECE_COUNT];

@@ -4,7 +4,7 @@
 
 #include "Okita.h"
 
-#include <Context.h>
+#include <context.h>
 
 void Okita::setPieceGameMode(int piece_game_mode) {
     return;

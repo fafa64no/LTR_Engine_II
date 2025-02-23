@@ -4,10 +4,10 @@
 
 #include "Pieces.h"
 
-#include <Context.h>
+#include <context.h>
 #include <iostream>
 #include <utility>
-#include "Effect_List.h"
+#include "effect_List.h"
 //Pieces::Pieces(string name) : name(std::move(name)) {}
 
 float Pieces::getSpriteX() {

@@ -4,7 +4,7 @@
 
 #include "Sesshoin_Kiara.h"
 #include <GameEngine.h>
-#include "Context.h"
+#include "context.h"
 
 
 //vector<Effect_List> Sesshoin_Kiara::getCasterEffects() const {

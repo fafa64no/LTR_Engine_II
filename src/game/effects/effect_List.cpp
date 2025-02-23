@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-#include "Effect_List.h"
+#include "effect_List.h"
 
 string Effect_List_to_string[EFFECT_COUNT];
 bool isBuff_List[EFFECT_COUNT];

@@ -4,7 +4,7 @@
 
 #include "Arceuid.h"
 #include <iostream>
-#include "Context.h"
+#include "context.h"
 
 //vector<Effect_List> Arceuid::getCasterEffects() const {
 //    if (evolved==true) {

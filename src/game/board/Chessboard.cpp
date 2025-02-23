@@ -7,7 +7,7 @@
 #include <King.h>
 #include <log.h>
 
-#include "Characters_List.h"
+#include "characters_List.h"
 #include "Pawn.h"
 #include "game_cfg.h"
 #include "RenderEngine.h"

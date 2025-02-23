@@ -7,7 +7,7 @@
 #include <functional>
 #include <unordered_map>
 #include "Chessboard.h"
-#include "Effect_List.h"
+#include "effect_List.h"
 using namespace std;
 
 

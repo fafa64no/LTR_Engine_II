@@ -5,7 +5,7 @@
 #ifndef PIECE_LOADER_H
 #define PIECE_LOADER_H
 
-#include <Characters_List.h>
+#include <characters_List.h>
 #include <Pieces.h>
 
 extern bool didPiecesGetInitiated;

@@ -8,16 +8,34 @@ add_executable(Chess_Grand_Order
 
 )
 
-add_compile_options(-Wno-int-to-pointer-cast)
-
-target_link_libraries(Chess_Grand_Order
-        opengl32
+add_compile_options(
+        -Wno-int-to-pointer-cast
+        -Wno-volatile
 )
 
-add_definitions(
-        -DAPIENTRY
-        -DGL_GLEXT_PROTOTYPES
+add_compile_definitions(
+        # APIENTRY
+        GL_GLEXT_PROTOTYPES
+        GLX_GLXEXT_PROTOTYPES
+        GL_GLEXT_PROTOTYPES
 )
+
+if (WIN32)
+    find_package(opengl32 REQUIRED)
+    target_link_libraries(Chess_Grand_Order
+            opengl32
+    )
+endif ()
+
+if (UNIX)
+    find_package(X11 REQUIRED)
+    find_package(OpenGL REQUIRED)
+    target_link_libraries(Chess_Grand_Order
+            X11
+            OpenGL
+    )
+endif (UNIX)
+
 target_sources(Chess_Grand_Order PRIVATE
         src/third_party/glcorearb.h
 )

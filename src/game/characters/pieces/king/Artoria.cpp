@@ -3,7 +3,7 @@
 //
 
 #include "Artoria.h"
-#include "Context.h"
+#include "context.h"
 
 
 //vector<Effect_List> Artoria::getCasterEffects() const {

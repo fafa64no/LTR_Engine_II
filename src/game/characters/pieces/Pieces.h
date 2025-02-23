@@ -12,9 +12,9 @@
 #include <memory>
 #include <SpriteTarget.h>
 
-#include "Pieces_List.h"
-#include "Characters_List.h"
-#include "Effect_List.h"
+#include "pieces_List.h"
+#include "characters_List.h"
+#include "effect_List.h"
 
 
 
