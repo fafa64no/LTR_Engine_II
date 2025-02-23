@@ -2,6 +2,8 @@
 // Created by david on 25/01/2025.
 //
 
+#include <iostream>
+
 #include "Effect_List.h"
 
 string Effect_List_to_string[EFFECT_COUNT];
@@ -10,6 +12,7 @@ bool isTriggerEffect_List[EFFECT_COUNT];
 void loadEffectList() {
     Effect_List_to_string[STUN] = "stun";
     Effect_List_to_string[CHANGE_CONTROL] = "changeControl";
+    Effect_List_to_string[CHANGE_CONTROL_ADVANCE] = "changeControlAdvance";
     Effect_List_to_string[AOE] = "aoe";
     Effect_List_to_string[GIVING_AOE] = "giveAoe";
     Effect_List_to_string[SHIELD] = "shield";
@@ -29,8 +32,9 @@ void loadEffectList() {
     Effect_List_to_string[EVOLVE] = "evolve";
     Effect_List_to_string[SUPP_LUCK] = "suppLuck";
     isBuff_List[STUN] = false;
-    isBuff_List[CHANGE_CONTROL] = false; ;
-    isBuff_List[AOE] = true;
+    isBuff_List[CHANGE_CONTROL] = false;
+    isBuff_List[CHANGE_CONTROL_ADVANCE] = false;
+    isBuff_List[AOE] = false;
     isBuff_List[GIVING_AOE] = true;
     isBuff_List[SHIELD] = true;
     isBuff_List[IMMUNITY_EFFECT] = true;
@@ -50,6 +54,7 @@ void loadEffectList() {
     isBuff_List[SUPP_LUCK] = true;
     isTriggerEffect_List[STUN] = false;
     isTriggerEffect_List[CHANGE_CONTROL] = true;
+    isTriggerEffect_List[CHANGE_CONTROL_ADVANCE] = true;
     isTriggerEffect_List[AOE] = true;
     isTriggerEffect_List[GIVING_AOE] = false;
     isTriggerEffect_List[SHIELD] = false;
@@ -72,9 +77,8 @@ void loadEffectList() {
 
 }
 
-EffectInstance::EffectInstance(const Effect_List effect, int effect_duration, int effect_amount)
-    :effect(effect), effect_duration(effect_duration), effect_amount(effect_amount){}
-
+//EffectInstance::EffectInstance(const Effect_List effect, int effect_duration, int effect_amount , int NB_Target, void* context)
+//    :effect(effect), effect_duration(effect_duration), effect_amount(effect_amount) , NB_Target(NB_Target) , caster_piece(context){}
 
 bool EffectInstance::isInfinite() const {
     return effect_amount == -1 && effect_duration == -1;
@@ -87,6 +91,7 @@ bool EffectInstance::isExpired() const {
 void EffectInstance::activation()  {
     if (effect_amount > 0) {
         effect_amount--;
+        std::cout << "remaining : " << effect_amount << std::endl;
     }
 }
 

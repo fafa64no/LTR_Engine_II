@@ -19,54 +19,73 @@
 #include <Sesshoin_Kiara.h>
 #include <Ushiwakamaru.h>
 
+#include "Gilgamesh.h"
+#include "Merlin.h"
+#include "Nitocris_Alter.h"
+#include "Okita.h"
+#include "Xu_Fu.h"
+
 bool didPiecesGetInitiated = false;
 
-Characters_List choose_pawn() {
+Characters_List choose_pawn(bool isWhite) {
     int id_character = NEMO_MARINE;
-    if constexpr (NOT_QUICK_TEST)
+    if constexpr (NOT_QUICK_TEST) {
+        cout << " Choose" << (isWhite ? " White" : " Black") << " pawn character: " << endl;
         cin >> id_character;
+    }
     return static_cast<Characters_List>(id_character);
 }
 
-Characters_List choose_knight() {
-    int id_character = USHIWAKAMARU;
-    if constexpr (NOT_QUICK_TEST)
+Characters_List choose_knight(bool isWhite, bool isRight) {
+    int id_character = OKITA;
+    if constexpr (NOT_QUICK_TEST) {
+        cout << " Choose" << (isWhite ? " White" : " Black") << " knight"<< (isRight ? "Right" : "Left")<<" character: " << endl;
         cin >> id_character;
+    }
     return static_cast<Characters_List>(id_character);
 }
 
-Characters_List choose_bishop() {
+Characters_List choose_bishop(bool isWhite, bool isRight) {
     int id_character = MEDUSA_SABER;
-    if constexpr (NOT_QUICK_TEST)
+    if constexpr (NOT_QUICK_TEST) {
+        cout << "Choose" << (isWhite ? " White" : " Black") << " bishop"<< (isRight ? "Right" : "Left")<<" character: " << endl;
         cin >> id_character;
+    }
     return static_cast<Characters_List>(id_character);
 }
 
-Characters_List choose_rook() {
-    int id_character = ARCEUID;
-    if constexpr (NOT_QUICK_TEST)
+Characters_List choose_rook(bool isWhite, bool isRight) {
+    int id_character = XU_FU;
+    if constexpr (NOT_QUICK_TEST) {
+        cout << "Choose" << (isWhite ? " White" : " Black") << " rook"<< (isRight ? "Right" : "Left")<<" character: " << endl;
         cin >> id_character;
+    }
     return static_cast<Characters_List>(id_character);
 }
 
-Characters_List choose_king() {
-    int id_character = ARTORIA;
-    if constexpr (NOT_QUICK_TEST)
+Characters_List choose_king(bool isWhite) {
+    int id_character = GILGAMESH;
+    if constexpr (NOT_QUICK_TEST) {
+        cout << "Choose" << (isWhite ? " White" : " Black") << " king character: " << endl;
         cin >> id_character;
+    }
     return static_cast<Characters_List>(id_character);
 }
 
-Characters_List choose_queen() {
-    int id_character = SESSHOIN_KIARA;
-    if constexpr (NOT_QUICK_TEST)
+Characters_List choose_queen(bool isWhite) {
+    int id_character = NITOCRIS_ALTER;
+    if constexpr (NOT_QUICK_TEST) {
+        cout << "Choose" << (isWhite ? " White" : " Black") << " queen character: " << endl;
         cin >> id_character;
+    }
     return static_cast<Characters_List>(id_character);
 }
 
 void add_piece_to_board(int x, int y, bool isWhite, Characters_List character) {
     auto* piece = get_piece(x,y,isWhite,character);
-    EffectHandler::configureEffectHandler(*Chessboard::getInstance(),piece);
+    //EffectHandler::configureEffectHandler(piece);
     Chessboard::getInstance()->placePiece(x,y,piece);
+    piece->addToAllMovesDoneBefore(piece->getCoordX(),piece->getCoordY());
 }
 
 Pieces* get_piece(int x, int y, bool isWhite, Characters_List character) {
@@ -75,9 +94,9 @@ Pieces* get_piece(int x, int y, bool isWhite, Characters_List character) {
         case MEDUSA_SABER:
         piece = new Medusa_Saber(x,y,isWhite,character,BISHOP);
         break;
-        //case MERLIN:
-        //piece = new Merlin(x,y,isWhite,character,PAWN);
-        //break;
+        case MERLIN:
+        piece = new Merlin(x,y,isWhite,character,BISHOP);
+        break;
         //case ASTOLFO:
         //piece = new Astolfo(x,y,isWhite,character,PAWN);
         //break;
@@ -87,9 +106,9 @@ Pieces* get_piece(int x, int y, bool isWhite, Characters_List character) {
         case USHIWAKAMARU:
         piece = new Ushiwakamaru(x,y,isWhite,character,KNIGHT);
         break;
-        //case OKITA:
-        //piece = new Okita(x,y,isWhite,character,PAWN);
-        //break;
+        case OKITA:
+        piece = new Okita(x,y,isWhite,character,KNIGHT);
+        break;
         //case KINTOKI_RIDER:
         //piece = new Kintoki_Rider(x,y,isWhite,character,PAWN);
         //break;
@@ -99,9 +118,9 @@ Pieces* get_piece(int x, int y, bool isWhite, Characters_List character) {
         case ARCEUID:
         piece = new Arceuid(x,y,isWhite,character,ROOK);
         break;
-        //case XU_FU:
-        //piece = new Xu_Fu(x,y,isWhite,character,PAWN);
-        //break;
+        case XU_FU:
+        piece = new Xu_Fu(x,y,isWhite,character,ROOK);
+        break;
         //case MELUSINE:
         //piece = new Melusine(x,y,isWhite,character,PAWN);
         //break;
@@ -111,9 +130,9 @@ Pieces* get_piece(int x, int y, bool isWhite, Characters_List character) {
         case SESSHOIN_KIARA:
         piece = new Sesshoin_Kiara(x,y,isWhite,character,QUEEN);
         break;
-        //case NITOCRIS_ALTER:
-        //piece = new Nitocris_Alter(x,y,isWhite,character,PAWN);
-        //break;
+        case NITOCRIS_ALTER:
+        piece = new Nitocris_Alter(x,y,isWhite,character,QUEEN);
+        break;
         //case BB_DUBAI:
         //piece = new Bb_Dubai(x,y,isWhite,character,PAWN);
         //break;
@@ -123,9 +142,9 @@ Pieces* get_piece(int x, int y, bool isWhite, Characters_List character) {
         case ARTORIA:
         piece = new Artoria(x,y,isWhite,character,KING);
         break;
-        //case GILGAMESH:
-        //piece = new Gilgamesh(x,y,isWhite,character,PAWN);
-        //break;
+        case GILGAMESH:
+        piece = new Gilgamesh(x,y,isWhite,character,KING);
+        break;
         //case OBERON:
         //piece = new Oberon(x,y,isWhite,character,PAWN);
         //break;
@@ -140,7 +159,7 @@ Pieces* get_piece(int x, int y, bool isWhite, Characters_List character) {
         //break;
         default:
         piece = new Nemo_Marine(x,y,isWhite,character,PAWN);
-        log(LOG_ERROR, "Piece type not found in piece_loader.hpp");
+        ltr_log_error("Piece type not found in piece_loader.hpp");
         break;
     }
     return piece;
@@ -153,66 +172,64 @@ void init_pieces() {
     init_rooks();
     init_kings();
     init_queens();
-
     didPiecesGetInitiated = true;
 }
 
 void init_pawns() {
+    Characters_List character = choose_pawn(false);
     for (int y = 0; y < BOARD_SIZE; y++) {
-        Characters_List character = choose_pawn();
         add_piece_to_board(1,y,false,character);
     }
-
+    character = choose_pawn(true);
     for (int y = 0; y < BOARD_SIZE; y++) {
-        Characters_List character = choose_pawn();
         add_piece_to_board(BOARD_SIZE-2,y,true,character);
     }
 }
 
 void init_knights() {
-    Characters_List character = choose_knight();
+    Characters_List character = choose_knight(false,false);
     add_piece_to_board(0,1,false,character);
-    character = choose_knight();
+    character = choose_knight(false,true);
     add_piece_to_board(0,6,false,character);
-    character = choose_knight();
-    add_piece_to_board(BOARD_SIZE-1,1,false,character);
-    character = choose_knight();
-    add_piece_to_board(BOARD_SIZE-1,6,false,character);
+    character = choose_knight(true,false);
+    add_piece_to_board(BOARD_SIZE-1,1,true,character);
+    character = choose_knight(true,true);
+    add_piece_to_board(BOARD_SIZE-1,6,true,character);
 }
 
 void init_bishops() {
-    Characters_List character = choose_bishop();
+    Characters_List character = choose_bishop(false,false);
     add_piece_to_board(0,2,false,character);
-    character = choose_bishop();
+    character = choose_bishop(false,true);
     add_piece_to_board(0,5,false,character);
-    character = choose_bishop();
-    add_piece_to_board(BOARD_SIZE-1,2,false,character);
-    character = choose_bishop();
-    add_piece_to_board(BOARD_SIZE-1,5,false,character);
+    character = choose_bishop(true,false);
+    add_piece_to_board(BOARD_SIZE-1,2,true,character);
+    character = choose_bishop(true, true);
+    add_piece_to_board(BOARD_SIZE-1,5,true,character);
 
 }
 
 void init_rooks() {
-    Characters_List character = choose_rook();
+    Characters_List character = choose_rook(false,false);
     add_piece_to_board(0,0,false,character);
-    character = choose_rook();
+    character = choose_rook(false,true);
     add_piece_to_board(0,7,false,character);
-    character = choose_rook();
-    add_piece_to_board(BOARD_SIZE-1,0,false,character);
-    character = choose_rook();
-    add_piece_to_board(BOARD_SIZE-1,7,false,character);
+    character = choose_rook(true,false);
+    add_piece_to_board(BOARD_SIZE-1,0,true,character);
+    character = choose_rook(true,true);
+    add_piece_to_board(BOARD_SIZE-1,7,true,character);
 }
 
 void init_kings() {
-    Characters_List character = choose_king();
-    add_piece_to_board(0,3,false,character);
-    character = choose_king();
-    add_piece_to_board(BOARD_SIZE-1,3,false,character);
+    Characters_List character = choose_king(false);
+    add_piece_to_board(0,4,false,character);
+    character = choose_king(true);
+    add_piece_to_board(BOARD_SIZE-1,4,true,character);
 }
 
 void init_queens() {
-    Characters_List character = choose_queen();
-    add_piece_to_board(0,4,false,character);
-    character = choose_queen();
-    add_piece_to_board(BOARD_SIZE-1,4,false,character);
+    Characters_List character = choose_queen(false);
+    add_piece_to_board(0,3,false,character);
+    character = choose_queen(true);
+    add_piece_to_board(BOARD_SIZE-1,3,true,character);
 }

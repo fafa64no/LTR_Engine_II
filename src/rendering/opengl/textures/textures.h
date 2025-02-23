@@ -37,10 +37,13 @@ enum tex_type {
     TEX_XUFU,
     TEX_ZHOU,
 
+    TEX_EMPTY,
+    TEX_WHITE,
+    TEX_SCREEN_BLOCKER,
+    TEX_SELECTION,
+
     TEX_COUNT
 };
-
-extern std::string texNames[TEX_COUNT];
 
 extern Texture* faridTexture;
 extern Texture* ltrTexture;
@@ -71,7 +74,11 @@ extern Texture* waverTexture;
 extern Texture* xufuTexture;
 extern Texture* zhouTexture;
 
+extern Texture* emptyTexture;
+extern Texture* whiteTexture;
+extern Texture* screenBlockerTexture;
+extern Texture* selectionTexture;
+
 void loadTextures();
-void loadTextureNames();
 
 #endif //TEXTURES_H

@@ -5,9 +5,7 @@
 #ifndef GLFUNCTIONS_H
 #define GLFUNCTIONS_H
 
-#ifdef _WIN32
-#include <windows.h>
-#endif
+#include "platform_header.h"
 
 #include "glcorearb.h"
 

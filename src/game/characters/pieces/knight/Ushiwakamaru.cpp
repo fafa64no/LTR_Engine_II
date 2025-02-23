@@ -6,11 +6,27 @@
 #include "Context.h"
 
 
-vector<Effect_List> Ushiwakamaru::getCasterEffects() const {
-    if (evolved==true) {
-        return {STUN,AOE};
-    }
-    return {STUN};
+void Ushiwakamaru::setPieceGameMode(int piece_game_mode) {
+    return;
+}
+
+
+vector<pair<int, int> > Ushiwakamaru::getMoves() {
+    vector<std::pair<int, int>> moves;
+    if (coordX + 1 < 8 && coordY + 2 < 8) moves.emplace_back(coordX + 1, coordY + 2);
+    if (coordX - 1 >= 0 && coordY + 2 < 8) moves.emplace_back(coordX - 1, coordY + 2);
+    if (coordX + 1 < 8 && coordY- 2 >= 0) moves.emplace_back(coordX + 1, coordY - 2);
+    if (coordX - 1 >= 0 && coordY - 2 >= 0) moves.emplace_back(coordX - 1, coordY - 2);
+    if (coordX + 2 < 8 && coordY + 1 < 8) moves.emplace_back(coordX + 2, coordY + 1);
+    if (coordX - 2 >= 0 && coordY + 1 < 8) moves.emplace_back(coordX - 2, coordY + 1);
+    if (coordX + 2 < 8 && coordY- 1 >= 0) moves.emplace_back(coordX + 2, coordY - 1);
+    if (coordX - 2 >= 0 && coordY - 1 >= 0) moves.emplace_back(coordX - 2, coordY - 1);
+    if (coordX + 1 < 8) moves.emplace_back(coordX + 1, coordY);
+    if (coordX - 1 >= 0) moves.emplace_back(coordX - 1, coordY);
+    if (coordY- 1 >= 0) moves.emplace_back(coordX, coordY - 1);
+    if (coordY + 1 < 8) moves.emplace_back(coordX, coordY + 1);
+    return moves;
+
 }
 
 
@@ -42,28 +58,45 @@ vector<pair<int, int> > Ushiwakamaru::getEffectRange(Effect_List effect) const {
     }
     return effect_range;
 }
-
-
-void Ushiwakamaru::passive(void* arg) {
+bool Ushiwakamaru::SpellActivationCheck(void *arg) {
     auto * context = static_cast<context_type *>(arg);
-    if (context->chessboard->KillCheck(context->piece,context->target_piece)) {
-        EffectHandler::applyEffectToTargets(context->piece,EffectInstance{STUN,2,2},*context->chessboard);
-        CNT_StunEffect++;
-
-
+    if (canEvolve(context))
+        evolved = true;
+    if (evolved && hasCharged){
+        passive(context);
+        evolvedForm(context);
+        return true;
     }
+    if (!passive(context))
+        this->setIsOnAMove(false);
+
+    return true;
+}
+
+
+bool Ushiwakamaru::passive(void* arg) {
+    auto * context = static_cast<context_type *>(arg);
+    if (evolved && hasJustKilled && !isOnAMove){
+        if (!hasCharged){
+            hasCharged = true;
+            return true;
+        }
+    }
+    hasCharged = false;
+    return false;
 }
 
 bool Ushiwakamaru::canEvolve(void *arg) {
-    if (evolved == false && CNT_StunEffect>1) {
-        std::cout << CNT_StunEffect << "Ready to evolve!!!"<<std::endl;
+    auto * context = static_cast<context_type *>(arg);
+    if (hasJustKilled && !context->target_piece->isPawn() && !context->target_piece->isRook() && !evolved) {
+        std::cout << "Ready to evolve!!!"<<std::endl;
         return true;
     }
     return false;
 
 }
 
-void Ushiwakamaru::evolvedForm(void *arg) {
-    evolved = true;
-
+bool Ushiwakamaru::evolvedForm(void *arg) {
+    EffectHandler::applyBuffToSelf(this,EffectInstance{ONE_MORE_MOVE,1,1,1});
+    return true;
 }

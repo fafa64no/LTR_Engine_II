@@ -5,21 +5,21 @@
 #ifndef UIELEMENTS_H
 #define UIELEMENTS_H
 
+#include <SpriteGroup.h>
+
 #include "Sprite.h"
 
 #include <vector>
 
-enum ui_sprite_type {
-    UI_SPRITE_BACKGROUND,
-    UI_SPRITE_BOARD,
-    UI_SPRITE_COUNT
-};
-
-extern Sprite** ui_sprites;
-extern std::vector<Sprite*> ui_additional_sprites;
+extern std::vector<Displayable*> ui_sprites;
 
 void initUIElements();
-void addAdditionalUIElement(Sprite* sprite);
+void addAdditionalUIElement(Displayable* sprite);
 void addAdditionalUIElement(Texture* texture, glm::vec2 size, SpriteTarget* target);
+
+void loadPossibleMoves(const std::vector<std::pair<int, int>>& possible_moves, glm::vec4 color);
+void unloadPossibleMoves();
+
+bool compareRenderOrder(Displayable* a, Displayable* b);
 
 #endif //UIELEMENTS_H

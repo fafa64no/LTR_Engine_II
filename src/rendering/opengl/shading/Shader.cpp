@@ -95,4 +95,3 @@ void Shader::setVec4(const std::string& name, glm::vec4 value) const {
         value_ptr(value)
     );
 }
-
