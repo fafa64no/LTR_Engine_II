@@ -13,16 +13,21 @@
 #ifndef APIENTRY
 #define APIENTRY
 #endif
-//
-// #ifndef GLAPI
-// #define GLAPI extern
-// #endif
+
+#ifndef GLAPI
+#define GLAPI extern
+#endif
+
+#ifndef GL_GLEXT_PROTOTYPES
+#define GL_GLEXT_PROTOTYPES
+#endif
+
+#ifndef GLX_GLXEXT_PROTOTYPES
+#define GLX_GLXEXT_PROTOTYPES
+#endif
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
-
-#undef None
-#undef Status
 
 #include "glcorearb.h"
 

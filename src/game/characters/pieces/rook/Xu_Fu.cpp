@@ -43,7 +43,7 @@ vector<pair<int, int> > Xu_Fu::getEffectRange(Effect_List effect) const {
 }
 
 bool Xu_Fu::SpellActivationCheck(void *arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     if (this->getPieceGameMode() != 0){
         if (!getIsOnAMove())
             passive(context);
@@ -69,7 +69,7 @@ bool Xu_Fu::SpellActivationCheck(void *arg) {
 
 
 bool Xu_Fu::passive(void* arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     int chance = rand() % 100;
     if (chance < ShieldChance){
         if (EffectHandler::applyEffectToTargets(this,EffectInstance{SHIELD,-1,1,1,this})){
@@ -80,7 +80,7 @@ bool Xu_Fu::passive(void* arg) {
 }
 
 bool Xu_Fu::canEvolve(void *arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     if (evolved == false && CNT_Shield == 2) {
         std::cout << "Ready to evolve!!!"<<std::endl;
         return true;
@@ -89,7 +89,7 @@ bool Xu_Fu::canEvolve(void *arg) {
 }
 
 bool Xu_Fu::evolvedForm(void *arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     if (GameEngine::getInstance()->getLastClickX() == coordX && GameEngine::getInstance()->getLastClickY() == coordY){
         EffectHandler::applyBuffToSelf(this,EffectInstance{SHIELD,-1,2,1});
         return true;

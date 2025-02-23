@@ -66,7 +66,7 @@ private:
 
 
     inline static GameEngine* instance = nullptr;
-    context_type* context = new context_type();
+    game_context_type* context = new game_context_type();
     unordered_map<GameState, function<void()>> state_handlers;
 
 

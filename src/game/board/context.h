@@ -8,7 +8,7 @@
 #include "EffectHandler.h"
 #include "Pieces.h"
 
-struct context_type {
+struct game_context_type {
     Pieces* piece;
     Pieces* target_piece;
     Chessboard* chessboard;

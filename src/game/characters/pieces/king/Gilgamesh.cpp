@@ -84,7 +84,7 @@ vector<pair<int, int> > Gilgamesh::getEffectRange(Effect_List effect) const {
 }
 
 bool Gilgamesh::SpellActivationCheck(void *arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     if (this->getPieceGameMode() != 0 && !evolved){
         passive(context);
         return true;
@@ -114,7 +114,7 @@ bool Gilgamesh::SpellActivationCheck(void *arg) {
 
 
 bool Gilgamesh::passive(void* arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     if (this != context->piece){
         CNT_NotMove++;
         return true;

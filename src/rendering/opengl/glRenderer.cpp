@@ -8,7 +8,6 @@
 #include "log.h"
 #include "RenderEngine.h"
 #include "shaders.h"
-#include "cubemaps.h"
 #include "vaos.h"
 #include "textures.h"
 #include "uiElements.h"
@@ -48,7 +47,6 @@ void glInit() {
     load_gl_functions();
     glInitCfg();
     initShaders();
-    loadCubeMaps();
     loadTextures();
     initVAOs();
     initUIElements();
@@ -96,17 +94,12 @@ void glClearScreen() {
 
 void glRender() {
     resolution = RenderEngine::getWindowSize();
-    glRenderWorld();
+    // glRenderWorld();
     glRenderUI();
 }
 
 void glRenderSkyBox() {
-    glDepthMask(GL_FALSE);
-    skybox->use();
-    skyboxShader->use();
-    skyboxVAO->bind();
-    glDrawArrays(GL_TRIANGLES, 0, VERTEX_PER_CUBE);
-    glDepthMask(GL_TRUE);
+
 }
 
 void glRenderWorld() {

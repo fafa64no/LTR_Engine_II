@@ -40,7 +40,7 @@ vector<pair<int, int> > Okita::getEffectRange(Effect_List effect) const {
     return effect_range;
 }
 bool Okita::SpellActivationCheck(void *arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
 
     passive(context);
     if (canEvolve(context))
@@ -58,7 +58,7 @@ bool Okita::SpellActivationCheck(void *arg) {
 
 
 bool Okita::passive(void* arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     if (!evolved && hasJustKilled && !isOnAMove && !context->target_piece->isPawn()){
         CNT_Charge++;
     }
@@ -66,7 +66,7 @@ bool Okita::passive(void* arg) {
 }
 
 bool Okita::canEvolve(void *arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     if (hasJustKilled && !evolved &&(context->target_piece->isQueen() || context->target_piece->isRook())) {
         std::cout << "Ready to evolve!!!"<<std::endl;
         return true;

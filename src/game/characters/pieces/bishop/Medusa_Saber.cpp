@@ -48,7 +48,7 @@ vector<pair<int, int> > Medusa_Saber::getEffectRange(Effect_List effect) const {
 }
 
 bool Medusa_Saber::SpellActivationCheck(void *arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     if (hasJustKilled) {
         if (canEvolve(context) || evolved)
             evolvedForm(context);
@@ -59,7 +59,7 @@ bool Medusa_Saber::SpellActivationCheck(void *arg) {
 
 
 bool Medusa_Saber::passive(void* arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     if (EffectHandler::applyEffectToTargets(this,EffectInstance{STUN,2,1,1}))
         CNT_StunEffect++;
     return true;
@@ -76,7 +76,7 @@ bool Medusa_Saber::canEvolve(void *arg) {
 }
 
 bool Medusa_Saber::evolvedForm(void *arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     evolved = true;
     EffectHandler::applyEffectToTargets(this,EffectInstance{AOE,1,1,-1});
     return true;

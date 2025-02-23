@@ -122,7 +122,7 @@ vector<pair<int, int> > Artoria::getEffectRange(Effect_List effect) const {
 }
 
 bool Artoria::SpellActivationCheck(void *arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     evolvedForm(context);
     if (canEvolve(context)){
         CNT_GodMove = 3;
@@ -138,7 +138,7 @@ bool Artoria::SpellActivationCheck(void *arg) {
 
 
 bool Artoria::passive(void* arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     EffectHandler::applyEffectToTargets(this,EffectInstance{AOE,1,1,-1});
 
 

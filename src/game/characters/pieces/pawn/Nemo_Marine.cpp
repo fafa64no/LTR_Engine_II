@@ -46,7 +46,7 @@ vector<pair<int, int> > Nemo_Marine::getEffectRange(Effect_List effect) const {
 }
 
 bool Nemo_Marine::SpellActivationCheck(void *arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     if (context->piece->getHasJustKilled())
         passive(context);
     return true;
@@ -54,7 +54,7 @@ bool Nemo_Marine::SpellActivationCheck(void *arg) {
 
 
 bool Nemo_Marine::passive(void* arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     EffectHandler::applyEffectToTargets(context->piece,EffectInstance{STUN,2,2,1});
     CNT_StunEffect++;
 

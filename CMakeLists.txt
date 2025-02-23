@@ -3,21 +3,13 @@ project(Chess_Grand_Order)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Chess_Grand_Order
-        src/main.cpp
-
-)
-
 add_compile_options(
         -Wno-int-to-pointer-cast
         -Wno-volatile
 )
 
-add_compile_definitions(
-        # APIENTRY
-        GL_GLEXT_PROTOTYPES
-        GLX_GLXEXT_PROTOTYPES
-        GL_GLEXT_PROTOTYPES
+add_executable(Chess_Grand_Order
+        src/main.cpp
 )
 
 if (WIN32)
@@ -80,8 +72,6 @@ target_sources(Chess_Grand_Order PRIVATE
         src/rendering/opengl/glRenderer.cpp
         src/rendering/opengl/shading/Shader.cpp
         src/rendering/opengl/shading/shaders.cpp
-        src/rendering/opengl/textures/CubeMap.cpp
-        src/rendering/opengl/textures/cubemaps.cpp
         src/rendering/opengl/textures/Texture.cpp
         src/rendering/opengl/textures/textures.cpp
         src/rendering/opengl/vao/VAO.cpp

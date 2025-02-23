@@ -42,7 +42,7 @@ vector<pair<int, int> > Nitocris_Alter::getEffectRange(Effect_List effect) const
 }
 
 bool Nitocris_Alter::SpellActivationCheck(void *arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     if (evolved && hasJustKilled) {
         evolvedForm(context);
     }
@@ -51,7 +51,7 @@ bool Nitocris_Alter::SpellActivationCheck(void *arg) {
 
 
 bool Nitocris_Alter::passive(void* arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
 
     if (isWhite){
         CNT_4Turn += GameEngine::getInstance()->NB_WhiteDead - GameEngine::getInstance()->NB_WhiteDeadLastPhase;
@@ -82,7 +82,7 @@ bool Nitocris_Alter::canEvolve(void *arg) {
 }
 
 bool Nitocris_Alter::evolvedForm(void *arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     EffectHandler::applyToEmptyCell(this,EffectInstance{SPAWN_PIECES,1,1,1,this});
     EffectHandler::applyEffectToTargets(this,EffectInstance{KILLING,1,1,1,this});
     return true;

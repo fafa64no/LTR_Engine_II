@@ -63,7 +63,7 @@ vector<pair<int, int> > Arceuid::getEffectRange(Effect_List effect) const {
 }
 
 bool Arceuid::SpellActivationCheck(void *arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     std::cout << "CNT : " << CNTGainEffect << std::endl;
     if (canEvolve(context)){
         evolved = true;
@@ -74,7 +74,7 @@ bool Arceuid::SpellActivationCheck(void *arg) {
 }
 
 bool Arceuid::passive(void* arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     return true;
 }
 

@@ -59,7 +59,7 @@ vector<pair<int, int> > Ushiwakamaru::getEffectRange(Effect_List effect) const {
     return effect_range;
 }
 bool Ushiwakamaru::SpellActivationCheck(void *arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     if (canEvolve(context))
         evolved = true;
     if (evolved && hasCharged){
@@ -75,7 +75,7 @@ bool Ushiwakamaru::SpellActivationCheck(void *arg) {
 
 
 bool Ushiwakamaru::passive(void* arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     if (evolved && hasJustKilled && !isOnAMove){
         if (!hasCharged){
             hasCharged = true;
@@ -87,7 +87,7 @@ bool Ushiwakamaru::passive(void* arg) {
 }
 
 bool Ushiwakamaru::canEvolve(void *arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     if (hasJustKilled && !context->target_piece->isPawn() && !context->target_piece->isRook() && !evolved) {
         std::cout << "Ready to evolve!!!"<<std::endl;
         return true;

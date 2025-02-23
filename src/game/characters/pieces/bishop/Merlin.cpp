@@ -58,7 +58,7 @@ vector<pair<int, int> > Merlin::getEffectRange(Effect_List effect) const {
 }
 
 bool Merlin::SpellActivationCheck(void *arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     //std::cout << "merlin power : " << MerlinPowerON <<std::endl;
     if (evolved && MerlinPowerON){
         if (GameEngine::getInstance()->receivedRightClick){
@@ -97,7 +97,7 @@ bool Merlin::SpellActivationCheck(void *arg) {
 
 
 bool Merlin::passive(void* arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     EffectHandler::applyEffectToTargets(this,EffectInstance{IMMUNITY_EFFECT,-1,1,1,this});
     EffectHandler::applyEffectToSelectionnedTarget(this,EffectInstance{IMMUNITY_AOE,-1,1,1,this},
         GameEngine::getInstance()->getLastPieceTouchedByEffect()->getCoordX(),GameEngine::getInstance()->getLastPieceTouchedByEffect()->getCoordY());
@@ -115,7 +115,7 @@ bool Merlin::canEvolve(void *arg) {
 }
 
 bool Merlin::evolvedForm(void *arg) {
-    auto * context = static_cast<context_type *>(arg);
+    auto * context = static_cast<game_context_type *>(arg);
     if (EffectHandler::applyEffectToSelectionnedTarget(this,EffectInstance{IMMUNITY_EFFECT,-1,1,1,this}) &&
         EffectHandler::applyEffectToSelectionnedTarget(this,EffectInstance{IMMUNITY_AOE,-1,1,1,this})){
         EffectHandler::applyBuffToSelf(this,EffectInstance{ONE_MORE_MOVE,1,1,1});
