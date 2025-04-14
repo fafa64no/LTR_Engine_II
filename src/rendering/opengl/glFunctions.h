@@ -5,7 +5,7 @@
 #ifndef GLFUNCTIONS_H
 #define GLFUNCTIONS_H
 
-#include "platform_header.h"
+#include "platform_opengl_header.h"
 
 void load_gl_functions();
 

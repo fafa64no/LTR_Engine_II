@@ -3,99 +3,108 @@
 //
 
 #include "Sesshoin_Kiara.h"
+
 #include <GameEngine.h>
-#include "context.h"
+#include "EffectHandler.h"
 
-
-//vector<Effect_List> Sesshoin_Kiara::getCasterEffects() const {
-//    if (evolved==true) {
-//        return {STUN,AOE};
-//    }
-//    return {STUN};
-//}
-
-void Sesshoin_Kiara::setPieceGameMode(int piece_game_mode) {
-    pieceGameMode = piece_game_mode;
+board_pattern *Sesshoin_Kiara::getEffectRange(const Effect_List effect) {
+    if (effect == CHANGE_CONTROL_ADVANCE)
+        return square_pattern;
+    if (effect == CHANGE_CONTROL)
+        return cross_2_pattern;
+    return getDefaultEffectsRanges();
 }
 
-
-vector<pair<int, int> > Sesshoin_Kiara::getEffectRange(Effect_List effect) const {
-
-    vector<std::pair<int, int>> effect_range;
-    if (effect == CHANGE_CONTROL_ADVANCE){
-        for (int i = 0; i < 8; ++i){
-            for (int j = 0; j < 8; ++j){
-                effect_range.emplace_back(i, j);
-            }
-        }
-    }
-
-    if (effect == CHANGE_CONTROL) {
-        for (int i = 1; i < 3; ++i) {
-            if (coordX + i < 8) effect_range.emplace_back(coordX + i, coordY);
-            if (coordX - i >= 0) effect_range.emplace_back(coordX - i, coordY);
-            if (coordY - i >= 0) effect_range.emplace_back(coordX, coordY - i);
-            if (coordY + i < 8) effect_range.emplace_back(coordX, coordY + i);
-        }
-    }
-    return effect_range;
-}
-
-bool Sesshoin_Kiara::SpellActivationCheck(void *arg) {
-    auto * context = static_cast<game_context_type *>(arg);
-    if (GameEngine::getInstance()->receivedRightClick){
-        std::cout << "gekooo" << std::endl;
-        if (this->getIsWhite()){
-            GameEngine::getInstance()->setLastState(GameEngine::getInstance()->getCurrentState());
-            GameEngine::getInstance()->setState(SELECT_WHITE_PHASE);
-        }
-        else{
-            GameEngine::getInstance()->setLastState(GameEngine::getInstance()->getCurrentState());
-            GameEngine::getInstance()->setState(SELECT_BLACK_PHASE);
-        }
+bool Sesshoin_Kiara::SpellActivationCheck() {
+    if (this->getPieceGameMode() == 0)
+        return true;
+    pieceGameMode = 0;
+    if (canEvolve())
+        evolved = true;
+    if (CNT_Charm != 3){
+        passive();
         return true;
     }
-    if (this->getPieceGameMode() != 0){
-        if (GameEngine::getInstance()->receivedClick){
-            //std::cout << "ayayayayayayayayayayayayayayayayayay" << std::endl;
-            if (canEvolve(context)){
-                if (evolvedForm(context))
-                    return true;
-                return false;
-            }
-            if (passive(context))
-                return true;
-        }
-        return false;
-    }
+    if (!evolved)
+        return true;
+    evolvedForm();
     return true;
 }
 
-
-bool Sesshoin_Kiara::passive(void* arg) {
-    auto * context = static_cast<game_context_type *>(arg);
-    if (EffectHandler::applyEffectToSelectionnedTarget(this,EffectInstance{CHANGE_CONTROL,5,1,1})){
+bool Sesshoin_Kiara::passive() {
+    static EffectInstance * effect_instance = nullptr;
+    if (effect_instance == nullptr) {
+        effect_instance = new EffectInstance(
+            CHANGE_CONTROL,
+            this,
+            5,
+            1,
+            1
+        );
+        effect_instance->check_condition = [](const void* cell) {
+            const auto* piece = static_cast<const chessboard_cell*>(cell)->piece;
+            if (piece == nullptr || !EffectHandler::cellIsInRange(static_cast<const chessboard_cell*>(cell),effect_instance))
+                return false;
+            return !piece->isKing();
+        };
+    }
+    selection_request_type selection_request;
+    selection_request.whites = isWhite ? 0 : 1;
+    selection_request.blacks = isWhite ? 1 : 0;
+    selection_request.instantValidation = false;
+    if (!EffectHandler::selectManualTargetCells(effect_instance, selection_request)){
+        pieceGameMode = 1;
+        return false;
+    }
+    if (EffectHandler::applyToTargets(effect_instance)){
+        effect_instance = nullptr;
         CNT_Charm++;
         return true;
     }
     return false;
 }
 
-bool Sesshoin_Kiara::canEvolve(void *arg) {
-    auto * context = static_cast<game_context_type *>(arg);
+bool Sesshoin_Kiara::canEvolve() {
     if (evolved == false && CNT_Charm > 2) {
-        std::cout << "Ready to evolve!!!"<<std::endl;
         return true;
     }
     return false;
 }
 
-bool Sesshoin_Kiara::evolvedForm(void *arg) {
-    auto * context = static_cast<game_context_type *>(arg);
-    if (EffectHandler::applyEffectToSelectionnedTarget(this,EffectInstance{CHANGE_CONTROL_ADVANCE,-1,1,1})){
-        std::cout << "Special competence"<<std::endl;
-        evolved = true;
+bool Sesshoin_Kiara::evolvedForm() {
+    static EffectInstance * effect_instance = nullptr;
+    if (effect_instance == nullptr) {
+        effect_instance = new EffectInstance(
+            CHANGE_CONTROL_ADVANCE,
+            this,
+            -1,
+            1,
+            1
+        );
+        effect_instance->check_condition = [](const void* cell) {
+            const auto* piece = static_cast<const chessboard_cell*>(cell)->piece;
+            if (piece == nullptr || !EffectHandler::cellIsInRange(static_cast<const chessboard_cell*>(cell),effect_instance))
+                return false;
+            return !piece->isKing();
+        };
+    }
+    selection_request_type selection_request;
+    selection_request.whites = isWhite ? 0 : 1;
+    selection_request.blacks = isWhite ? 1 : 0;
+    selection_request.instantValidation = false;
+    if (!EffectHandler::selectManualTargetCells(effect_instance, selection_request)){
+        pieceGameMode = 1;
+        return false;
+    }
+    if (EffectHandler::applyToTargets(effect_instance)) {
+        effect_instance = nullptr;
+        CNT_Charm++;
         return true;
     }
     return false;
+}
+
+bool Sesshoin_Kiara::togglePieceGameMode() {
+    pieceGameMode = !pieceGameMode;
+    return pieceGameMode != 0;
 }

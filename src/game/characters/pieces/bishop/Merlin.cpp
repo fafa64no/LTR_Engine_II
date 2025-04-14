@@ -4,121 +4,100 @@
 
 #include "Merlin.h"
 
-#include <context.h>
+#include <EffectHandler.h>
 #include <GameEngine.h>
 
-
-void Merlin::setPieceGameMode(int piece_game_mode) {
-    //std::cout<< MerlinPowerON<< "tuer moi par pitie" << std::endl;
-    //std::cout<< pieceGameMode<< "HHHEEEEEELLLLPPPP" << std::endl;
-    if (evolved && MerlinPowerON){
-        //std::cout<< MerlinPowerON<< "HHHEEEEEELLLLPPPP" << std::endl;
-        pieceGameMode = piece_game_mode;
-    } else{
-        pieceGameMode = 0;
-    }
+board_pattern *Merlin::getEffectRange(const Effect_List effect) {
+    if (chooseSpell)
+        if (effect == IMMUNITY_EFFECT || effect == IMMUNITY_AOE)
+            return square_pattern;
+    if (effect == IMMUNITY_EFFECT || effect == IMMUNITY_AOE)
+        return cross_1_pattern;
+    return getDefaultEffectsRanges();
 }
 
-
-vector<pair<int, int> > Merlin::getEffectRange(Effect_List effect) const {
-
-    vector<std::pair<int, int>> effect_range;
-
-    if (effect == IMMUNITY_EFFECT && !chooseSpell) {
-        if (coordX + 1 < 8) effect_range.emplace_back(coordX + 1, coordY);
-        if (coordX - 1 >= 0) effect_range.emplace_back(coordX - 1, coordY);
-        if (coordY - 1 >= 0) effect_range.emplace_back(coordX, coordY - 1);
-        if (coordY + 1 < 8) effect_range.emplace_back(coordX, coordY + 1);
-    }
-
-    if (effect == IMMUNITY_AOE && !chooseSpell) {
-        if (coordX + 1 < 8) effect_range.emplace_back(coordX + 1, coordY);
-        if (coordX - 1 >= 0) effect_range.emplace_back(coordX - 1, coordY);
-        if (coordY - 1 >= 0) effect_range.emplace_back(coordX, coordY - 1);
-        if (coordY + 1 < 8) effect_range.emplace_back(coordX, coordY + 1);
-    }
-
-    if (chooseSpell){
-        if (effect == IMMUNITY_EFFECT) {
-            for (int i = 0; i < 8; ++i){
-                for (int j = 0; j < 8; ++j){
-                    effect_range.emplace_back(i, j);
-                }
-            }
-        }
-        if (effect == IMMUNITY_AOE) {
-            for (int i = 0; i < 8; ++i){
-                for (int j = 0; j < 8; ++j){
-                    effect_range.emplace_back(i, j);
-                }
-            }
-        }
-    }
-    return effect_range;
-}
-
-bool Merlin::SpellActivationCheck(void *arg) {
-    auto * context = static_cast<game_context_type *>(arg);
-    //std::cout << "merlin power : " << MerlinPowerON <<std::endl;
-    if (evolved && MerlinPowerON){
-        if (GameEngine::getInstance()->receivedRightClick){
-            //std::cout << "gekooo" << std::endl;
-            if (this->getIsWhite()){
-                GameEngine::getInstance()->setLastState(GameEngine::getInstance()->getCurrentState());
-                GameEngine::getInstance()->setState(SELECT_WHITE_PHASE);
-            }
-            else{
-                GameEngine::getInstance()->setLastState(GameEngine::getInstance()->getCurrentState());
-                GameEngine::getInstance()->setState(SELECT_BLACK_PHASE);
-            }
-            return true;
-        }
-        if (this->getPieceGameMode() != 0){
-            if (GameEngine::getInstance()->receivedClick){
-                chooseSpell = true;
-                if (evolvedForm(context)){
-                    chooseSpell = false;
-                    MerlinPowerON = false;
-                    return true;
-                }
-                chooseSpell = false;
-
-
-            }
-            return false;
-        }
-    }
-    if (evolved && !MerlinPowerON && !isOnAMove)
+bool Merlin::SpellActivationCheck() {
+    if (canEvolve()) {
         MerlinPowerON = true;
-    passive(context);
-    setIsOnAMove(false);
-    return true;
-}
-
-
-bool Merlin::passive(void* arg) {
-    auto * context = static_cast<game_context_type *>(arg);
-    EffectHandler::applyEffectToTargets(this,EffectInstance{IMMUNITY_EFFECT,-1,1,1,this});
-    EffectHandler::applyEffectToSelectionnedTarget(this,EffectInstance{IMMUNITY_AOE,-1,1,1,this},
-        GameEngine::getInstance()->getLastPieceTouchedByEffect()->getCoordX(),GameEngine::getInstance()->getLastPieceTouchedByEffect()->getCoordY());
-    return true;
-}
-
-bool Merlin::canEvolve(void *arg) {
-    //std::cout <<CNT_StunEffect<<std::endl;
-    if (evolved == false ) {
-        //std::cout <<"Ready to evolve!!!"<<std::endl;
-        return true;
+        evolved = true;
     }
-    return false;
-
+    chooseSpell = false;
+    if (!passiveUsed)
+        passive();
+    if (evolved && MerlinPowerON) {
+        chooseSpell = true;
+        if (!evolvedForm())
+            return true;
+    }
+    if (evolved)
+        MerlinPowerON = !MerlinPowerON;
+    passiveUsed = false;
+    return true;
 }
 
-bool Merlin::evolvedForm(void *arg) {
-    auto * context = static_cast<game_context_type *>(arg);
-    if (EffectHandler::applyEffectToSelectionnedTarget(this,EffectInstance{IMMUNITY_EFFECT,-1,1,1,this}) &&
-        EffectHandler::applyEffectToSelectionnedTarget(this,EffectInstance{IMMUNITY_AOE,-1,1,1,this})){
-        EffectHandler::applyBuffToSelf(this,EffectInstance{ONE_MORE_MOVE,1,1,1});
+bool Merlin::passive() {
+    auto* effect_instance_1 = new EffectInstance(
+        IMMUNITY_EFFECT,
+        this,
+        -1,
+        1,
+        1
+    );
+    auto* effect_instance_2 = new EffectInstance(
+        IMMUNITY_AOE,
+        this,
+        -1,
+        1,
+        1
+    );
+    EffectHandler::selectRandomTargetPieces(effect_instance_1);
+    effect_instance_2->copyTargets(effect_instance_1);
+    EffectHandler::applyToTargets(effect_instance_1);
+    EffectHandler::applyToTargets(effect_instance_2);
+    passiveUsed = true;
+    return true;
+}
+
+bool Merlin::canEvolve() {
+    if (!evolved && !getAllEffectUpdateCastedByMeEvent().empty())
+        return true;
+    return false;
+}
+
+bool Merlin::evolvedForm() {
+    static EffectInstance * effect_instance_1 = nullptr;
+    if (effect_instance_1 == nullptr) {
+        effect_instance_1 = new EffectInstance(
+            IMMUNITY_EFFECT,
+            this,
+            -1,
+            1,
+            1
+        );
+        effect_instance_1->check_condition = [](const void* cell) {
+            const auto* piece = static_cast<const chessboard_cell*>(cell)->piece;
+            if (piece == nullptr)
+                return false;
+            return !piece->isKing();
+        };
+    }
+    selection_request_type selection_request;
+    selection_request.whites = isWhite ? 1 : 0;
+    selection_request.blacks = isWhite ? 0 : 1;
+    selection_request.instantValidation = false;
+    if (!EffectHandler::selectManualTargetCells(effect_instance_1, selection_request))
+        return false;
+    auto *  effect_instance_2 = new EffectInstance(
+        IMMUNITY_AOE,
+        this,
+        -1,
+        1,
+        1
+    );
+    EffectHandler::selectRandomTargetPieces(effect_instance_1);
+    effect_instance_2->copyTargets(effect_instance_1);
+    if (EffectHandler::applyToTargets(effect_instance_1) && EffectHandler::applyToTargets(effect_instance_2)) {
+        effect_instance_1 = nullptr;
         return true;
     }
     return false;

@@ -4,82 +4,64 @@
 
 #include "Medusa_Saber.h"
 
-#include "context.h"
+#include <GameEngine.h>
 
+#include "EffectHandler.h"
 
-//vector<Effect_List> Medusa_Saber::getCasterEffects() const {
-//    if (evolved==true) {
-//        return {STUN,AOE};
-//    }
-//    return {STUN};
-//}
-
-void Medusa_Saber::setPieceGameMode(int piece_game_mode) {
-    return;
+board_pattern *Medusa_Saber::getEffectRange(const Effect_List effect) {
+    if (evolved) {
+        if (effect == STUN)
+            return cross_1_pattern;
+        if (effect == AOE)
+            return x_cross_1_pattern;
+    } else {
+        if (effect == STUN)
+            return x_cross_1_pattern;
+    }
+    return getDefaultEffectsRanges();
 }
 
-
-vector<pair<int, int> > Medusa_Saber::getEffectRange(Effect_List effect) const {
-
-    vector<std::pair<int, int>> effect_range;
-
-    if (effect == STUN && evolved==false) {
-        if (coordX + 1 < 8 && coordY + 1 < 8) effect_range.emplace_back(coordX + 1, coordY + 1);
-        if (coordX - 1 >= 0 && coordY + 1 < 8) effect_range.emplace_back(coordX - 1, coordY + 1);
-        if (coordX + 1 < 8 && coordY - 1 >= 0) effect_range.emplace_back(coordX + 1, coordY - 1);
-        if (coordX - 1 >= 0 && coordY - 1 >= 0) effect_range.emplace_back(coordX - 1, coordY - 1);
-    }
-    if (evolved==true) {
-        if (effect == STUN) {
-            if (coordX + 1 < 8) effect_range.emplace_back(coordX + 1, coordY);
-            if (coordX - 1 >= 0) effect_range.emplace_back(coordX - 1, coordY);
-            if (coordY - 1 >= 0) effect_range.emplace_back(coordX, coordY - 1);
-            if (coordY + 1 < 8) effect_range.emplace_back(coordX, coordY + 1);
-
-        }
-        if (effect == AOE) {
-            if (coordX + 1 < 8 && coordY + 1 < 8) effect_range.emplace_back(coordX + 1, coordY + 1);
-            if (coordX - 1 >= 0 && coordY + 1 < 8) effect_range.emplace_back(coordX - 1, coordY + 1);
-            if (coordX + 1 < 8 && coordY - 1 >= 0) effect_range.emplace_back(coordX + 1, coordY - 1);
-            if (coordX - 1 >= 0 && coordY - 1 >= 0) effect_range.emplace_back(coordX - 1, coordY - 1);
-        }
-    }
-    return effect_range;
-}
-
-bool Medusa_Saber::SpellActivationCheck(void *arg) {
-    auto * context = static_cast<game_context_type *>(arg);
-    if (hasJustKilled) {
-        if (canEvolve(context) || evolved)
-            evolvedForm(context);
-        passive(context);
-    }
+bool Medusa_Saber::SpellActivationCheck() {
+    if (getLastKillTurn() != GameEngine::getInstance()->getTurnNumber())
+        return true;
+    if (canEvolve() || evolved)
+        evolvedForm();
+    passive();
     return true;
 }
 
-
-bool Medusa_Saber::passive(void* arg) {
-    auto * context = static_cast<game_context_type *>(arg);
-    if (EffectHandler::applyEffectToTargets(this,EffectInstance{STUN,2,1,1}))
+bool Medusa_Saber::passive() {
+    auto * effect_instance = new EffectInstance(
+        STUN,
+        this,
+        2,
+        2,
+        1
+    );
+    EffectHandler::selectRandomTargetPieces(effect_instance);
+    if (EffectHandler::applyToTargets(effect_instance))
         CNT_StunEffect++;
     return true;
 }
 
-bool Medusa_Saber::canEvolve(void *arg) {
-    //std::cout <<CNT_StunEffect<<std::endl;
+bool Medusa_Saber::canEvolve() {
     if (evolved == false && CNT_StunEffect>1) {
-        //std::cout <<"Ready to evolve!!!"<<std::endl;
         return true;
     }
     return false;
 
 }
 
-bool Medusa_Saber::evolvedForm(void *arg) {
-    auto * context = static_cast<game_context_type *>(arg);
+bool Medusa_Saber::evolvedForm() {
     evolved = true;
-    EffectHandler::applyEffectToTargets(this,EffectInstance{AOE,1,1,-1});
+    auto *  effect_instance = new EffectInstance(
+        AOE,
+        this,
+        1,
+        1,
+        -1
+    );
+    EffectHandler::selectRandomTargetPieces(effect_instance);
+    EffectHandler::applyToTargets(effect_instance);
     return true;
-
-
 }

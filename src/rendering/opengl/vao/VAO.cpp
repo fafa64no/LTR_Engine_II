@@ -4,7 +4,6 @@
 
 #include "VAO.h"
 
-#include <iostream>
 #include "glFunctions.h"
 
 #include "log.h"

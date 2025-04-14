@@ -6,7 +6,6 @@
 
 #include <iostream>
 #include <log.h>
-#include <ostream>
 #include <ext/matrix_transform.hpp>
 
 #include "vaos.h"
@@ -54,7 +53,7 @@ void Sprite::draw() {
     this->vao->bind();
     this->texture->bind();
     this->shader->use();
-    glm::mat4 model = glm::mat4(1.0f);
+    auto model = glm::mat4(1.0f);
     model = translate(model, this->position);
     model = scale(model, glm::vec3(this->size.x, this->size.y, 1));
     model = rotate(model, glm::radians(this->rotation), glm::vec3(0, 0, 1));

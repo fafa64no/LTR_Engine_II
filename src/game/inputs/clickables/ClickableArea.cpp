@@ -4,6 +4,7 @@
 
 #include "ClickableArea.h"
 
+#include <log.h>
 #include <utility>
 #include "uiElements.h"
 

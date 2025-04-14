@@ -5,23 +5,20 @@
 #ifndef OKITA_H
 #define OKITA_H
 
-
-
 #include <textures.h>
 #include <uiElements.h>
 #include "RenderEngine.h"
 #include "rendering_cfg.h"
 
-#include "Knight.h"
+#include "Pieces.h"
 
 
 class Okita final : public Knight {
     protected :
         int CNT_Charge = 0;
 public:
-    Okita(int startX, int startY, bool white, Characters_List hero,
-        Pieces_List pieces_root)
-        : Knight(startX, startY, white, hero, pieces_root) {
+    Okita(const int startX, const int startY, const bool white, const Characters_List hero)
+            : Knight(startX, startY, white, hero)  {
         addAdditionalUIElement(
             okitaTexture,
             glm::vec2(PIECE_SIZE * RenderEngine::getWindowInverseAspectRatio(), PIECE_SIZE),
@@ -29,13 +26,10 @@ public:
         );
     }
 
-    //[[nodiscard]] vector<Effect_List> getCasterEffects() const override;
-    [[nodiscard]] vector<pair<int, int>> getEffectRange(Effect_List effect) const override;
-    bool passive(void* arg) override;
-    bool canEvolve(void* arg) override;
-    bool evolvedForm(void* arg) override;
-    bool SpellActivationCheck(void *arg) override;
-    void setPieceGameMode(int piece_game_mode) override;
+    bool passive() override;
+    bool canEvolve() override;
+    bool evolvedForm() override;
+    bool SpellActivationCheck() override;
 
 
 

@@ -7,7 +7,7 @@
 
 #include "glm.hpp"
 
-void* platform_load_gl_function(char* funName);
+void* platform_load_gl_function(const char* funName);
 
 int platform_create_window(int width, int height, const char* title);
 void platform_update_window();

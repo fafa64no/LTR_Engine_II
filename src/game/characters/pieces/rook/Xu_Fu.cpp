@@ -4,100 +4,113 @@
 
 #include "Xu_Fu.h"
 
-#include <context.h>
+#include <EffectHandler.h>
 #include <GameEngine.h>
 
 
-void Xu_Fu::setPieceGameMode(int piece_game_mode) {
-    pieceGameMode = piece_game_mode;
+board_pattern *Xu_Fu::getEffectRange(const Effect_List effect) {
+    vector<glm::ivec2> effect_range;
+    if (effect == IMMORTALITY)
+        return cross_1_pattern;
+    if (effect == SHIELD)
+        return cross_1_pattern;
+    if (effect == SUPP_RANGE)
+        return cross_1_pattern;
+    return getDefaultEffectsRanges();
 }
 
-
-vector<pair<int, int> > Xu_Fu::getEffectRange(Effect_List effect) const {
-
-    vector<std::pair<int, int>> effect_range;
-    if (effect == IMMORTALITY){
-        for (int i = 0; i < 8; ++i){
-            for (int j = 0; j < 8; ++j){
-                effect_range.emplace_back(i, j);
-            }
-        }
-    }
-
-    if (effect == SHIELD) {
-        if (coordX + 1 < 8) effect_range.emplace_back(coordX + 1, coordY);
-        if (coordX - 1 >= 0) effect_range.emplace_back(coordX - 1, coordY);
-        if (coordY - 1 >= 0) effect_range.emplace_back(coordX, coordY - 1);
-        if (coordY + 1 < 8) effect_range.emplace_back(coordX, coordY + 1);
-    }
-
-
-    if (effect == SUPP_RANGE){
-        for (int i = 0; i < 8; ++i){
-            for (int j = 0; j < 8; ++j){
-                effect_range.emplace_back(i, j);
-            }
-        }
-    }
-    return effect_range;
-}
-
-bool Xu_Fu::SpellActivationCheck(void *arg) {
-    auto * context = static_cast<game_context_type *>(arg);
-    if (this->getPieceGameMode() != 0){
-        if (!getIsOnAMove())
-            passive(context);
-        if (canEvolve(context)){
-            setIsOnAMove(true);
-            evolved = true;
-        }
-        if (GameEngine::getInstance()->receivedClick && evolved){
-            //std::cout << "ayayayayayayayayayayayayayayayayayay" << std::endl;
-            if (evolvedForm(context)){
-                setIsOnAMove(false);
-                return true;
-            }
-            return false;
-        }
-
-        if (evolved && getIsOnAMove()){
-            return false;
-        }
-    }
+bool Xu_Fu::SpellActivationCheck() {
+    if (this->getPieceGameMode() == 0)
+        return true;
+    pieceGameMode = 0;
+    passive();
+    if (canEvolve())
+        evolved = true;
+    if (!evolved)
+        return true;
+    evolvedForm();
     return true;
 }
 
-
-bool Xu_Fu::passive(void* arg) {
-    auto * context = static_cast<game_context_type *>(arg);
-    int chance = rand() % 100;
-    if (chance < ShieldChance){
-        if (EffectHandler::applyEffectToTargets(this,EffectInstance{SHIELD,-1,1,1,this})){
-            CNT_Shield++;
-        }
-    }
+bool Xu_Fu::passive() {
+    if (const int chance = rand() % 100; chance >= shieldChance)
+        return true;
+    auto *  effect_instance = new EffectInstance(
+        GIVING_AOE,
+        this,
+        -1,
+        1,
+        -1
+    );
+    effect_instance->check_condition = [](const void* cell) {
+        const auto* piece = static_cast<const chessboard_cell*>(cell)->piece;
+        if (piece == nullptr)
+            return false;
+        return piece->isPawn();
+    };
+    EffectHandler::selectRandomTargetPieces(effect_instance);
+    if (EffectHandler::applyToTargets(effect_instance))
+        CNT_Shield++;
     return true;
 }
 
-bool Xu_Fu::canEvolve(void *arg) {
-    auto * context = static_cast<game_context_type *>(arg);
-    if (evolved == false && CNT_Shield == 2) {
-        std::cout << "Ready to evolve!!!"<<std::endl;
+bool Xu_Fu::evolvedForm() {
+    // Selection of target
+    static EffectInstance * effect_instance_1 = nullptr;
+    if (effect_instance_1 == nullptr) {
+        effect_instance_1 = new EffectInstance(
+            IMMORTALITY,
+            this,
+            -1,
+            -1,
+            1
+        );
+        effect_instance_1->check_condition = [this](const void* cell) {
+            const auto* piece = static_cast<const chessboard_cell*>(cell)->piece;
+            if (piece == nullptr)
+                return false;
+            return piece->isPawn() || piece == this;
+        };
+    }
+    selection_request_type selection_request;
+    selection_request.whites = isWhite ? 1 : 0;
+    selection_request.blacks = isWhite ? 0 : 1;;
+    selection_request.instantValidation = false;
+    if (!EffectHandler::selectManualTargetCells(effect_instance_1, selection_request)) {
+        pieceGameMode = 1;
+        return false;
+    }
+    // Case where we selected this
+    if (effect_instance_1->target_pieces[0] == this) {
+        auto * effect_instance = new EffectInstance(
+            SHIELD,
+            this,
+            -1,
+            2,
+            1
+        );
+        EffectHandler::applyBuffToSelf(effect_instance);
+        effect_instance_1 = nullptr;
+        return true;
+    }
+    // Case where we selected a pawn
+    auto * effect_instance_2 = new EffectInstance(
+        SUPP_RANGE,
+        this,
+        -1,
+        1,
+        1
+    );
+    effect_instance_2->copyTargets(effect_instance_1);
+    if (EffectHandler::applyToTargets(effect_instance_1)) {
+        EffectHandler::applyToTargets(effect_instance_2);
+        effect_instance_1 = nullptr;
         return true;
     }
     return false;
 }
 
-bool Xu_Fu::evolvedForm(void *arg) {
-    auto * context = static_cast<game_context_type *>(arg);
-    if (GameEngine::getInstance()->getLastClickX() == coordX && GameEngine::getInstance()->getLastClickY() == coordY){
-        EffectHandler::applyBuffToSelf(this,EffectInstance{SHIELD,-1,2,1});
-        return true;
-    }
-    if (EffectHandler::applyEffectToSelectionnedTarget(this,EffectInstance{IMMORTALITY,-1,-1,1,this})){
-        EffectHandler::applyEffectToSelectionnedTarget(this,EffectInstance{SUPP_RANGE,-1,1,1,this});
-        std::cout << "Special competence"<<std::endl;
-        return true;
-    }
-    return false;
+bool Xu_Fu::togglePieceGameMode() {
+    pieceGameMode = !pieceGameMode;
+    return pieceGameMode != 0;
 }

@@ -4,21 +4,23 @@
 
 #ifndef MERLIN_H
 #define MERLIN_H
-#include <Bishop.h>
+
+#include <Pieces.h>
 #include <RenderEngine.h>
 #include <rendering_cfg.h>
 #include <textures.h>
 #include <uiElements.h>
 
 
-class Merlin final : public Bishop{
+class Merlin final : public Bishop {
     protected :
-        bool chooseSpell = false;
-        bool MerlinPowerON = false;
+        bool chooseSpell{false}, passiveUsed{false};
+        bool MerlinPowerON{false};
 public:
-    Merlin(int startX, int startY, bool white, Characters_List hero,
-         Pieces_List pieces_root)
-        : Bishop(startX, startY, white, hero, pieces_root) {
+    Merlin(const int startX, const int startY, const bool white, const Characters_List hero)
+            : Bishop(startX, startY, white, hero) {
+        defaultEffectsRanges[IMMUNITY_AOE] = [this](){return this->getEffectRange(IMMUNITY_AOE);};
+        defaultEffectsRanges[IMMUNITY_EFFECT] = [this](){return this->getEffectRange(IMMUNITY_EFFECT);};
         addAdditionalUIElement(
             merlinTexture,
             glm::vec2(PIECE_SIZE * RenderEngine::getWindowInverseAspectRatio(), PIECE_SIZE),
@@ -26,16 +28,11 @@ public:
         );
     }
 
-    //[[nodiscard]] vector<Effect_List> getCasterEffects() const override;
-    [[nodiscard]] vector<pair<int, int>> getEffectRange(Effect_List effect) const override;
-    bool passive(void* arg) override;
-    bool canEvolve(void* arg) override;
-    bool evolvedForm(void* arg) override;
-    bool SpellActivationCheck(void *arg) override;
-    void setPieceGameMode(int piece_game_mode) override;
-
-
-
+    [[nodiscard]] board_pattern *getEffectRange(Effect_List effect) override;
+    bool passive() override;
+    bool canEvolve() override;
+    bool evolvedForm() override;
+    bool SpellActivationCheck() override;
 };
 
 

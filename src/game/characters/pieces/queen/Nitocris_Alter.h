@@ -4,7 +4,8 @@
 
 #ifndef NITOCRIS_ALTER_H
 #define NITOCRIS_ALTER_H
-#include <Queen.h>
+
+#include <Pieces.h>
 #include <RenderEngine.h>
 #include <rendering_cfg.h>
 #include <textures.h>
@@ -17,9 +18,11 @@ class Nitocris_Alter final : public Queen{
         int CNT_Revive = 0;
         int CNT_4Turn = 0;
 public:
-    Nitocris_Alter(int startX, int startY, bool white, Characters_List hero,
-         Pieces_List pieces_root)
-        : Queen(startX, startY, white, hero, pieces_root) {
+    Nitocris_Alter(const int startX, const int startY, const bool white, const Characters_List hero)
+            : Queen(startX, startY, white, hero)  {
+        defaultEffectsRanges[SPAWN_PIECES] = [this](){return this->getEffectRange(SPAWN_PIECES);};
+        defaultEffectsRanges[KILLING] = [this](){return this->getEffectRange(KILLING);};
+        this->default_piece_move = inverted_shinji_moves;
         addAdditionalUIElement(
             nitocrisTexture,
             glm::vec2(PIECE_SIZE * RenderEngine::getWindowInverseAspectRatio(), PIECE_SIZE),
@@ -27,16 +30,11 @@ public:
         );
     }
 
-    //[[nodiscard]] vector<Effect_List> getCasterEffects() const override;
-    [[nodiscard]] vector<pair<int, int>> getEffectRange(Effect_List effect) const override;
-    bool passive(void* arg) override;
-    bool canEvolve(void* arg) override;
-    bool evolvedForm(void* arg) override;
-    bool SpellActivationCheck(void *arg) override;
-    void setPieceGameMode(int piece_game_mode) override;
-
-
-
+    [[nodiscard]] board_pattern *getEffectRange(Effect_List effect) override;
+    bool passive() override;
+    bool canEvolve() override;
+    bool evolvedForm() override;
+    bool SpellActivationCheck() override;
 };
 
 

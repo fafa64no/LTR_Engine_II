@@ -94,31 +94,11 @@ void glClearScreen() {
 
 void glRender() {
     resolution = RenderEngine::getWindowSize();
-    // glRenderWorld();
-    glRenderUI();
-}
-
-void glRenderSkyBox() {
-
-}
-
-void glRenderWorld() {
     glViewport(0, 0, resolution.x, resolution.y);
-    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-    glEnable(GL_DEPTH_TEST);
-    glClearScreen();
-    glRenderSkyBox();
-    ///TODO draw world displayables
     glBindFramebuffer(GL_FRAMEBUFFER,0);
-    glWorldPostProcessing();
-}
-
-void glWorldPostProcessing() {
     glClearScreen();
-    postProcessingShader->use();
-    quadVAO->bind();
-    frameTexture->bind();
-    glDrawArrays(GL_TRIANGLES,0,VERTEX_PER_QUAD);
+    glEnable(GL_DEPTH_TEST);
+    glRenderUI();
 }
 
 void glRenderUI() {

@@ -5,8 +5,7 @@
 #ifndef XU_FU_H
 #define XU_FU_H
 
-
-#include <Rook.h>
+#include <Pieces.h>
 #include <textures.h>
 #include <uiElements.h>
 #include "RenderEngine.h"
@@ -17,11 +16,13 @@
 class Xu_Fu final : public Rook{
     protected :
     int CNT_Shield = 0;
-    int ShieldChance = 100;
+    int shieldChance = 90;
 public:
-    Xu_Fu(int startX, int startY, bool white, Characters_List hero,
-        Pieces_List pieces_root)
-        : Rook(startX, startY, white, hero, pieces_root) {
+    Xu_Fu(const int startX, const int startY, const bool white, const Characters_List hero)
+            : Rook(startX, startY, white, hero)  {
+        defaultEffectsRanges[IMMORTALITY] = [this](){return this->getEffectRange(IMMORTALITY);};
+        defaultEffectsRanges[SHIELD] = [this](){return this->getEffectRange(SHIELD);};
+        defaultEffectsRanges[SUPP_RANGE] = [this](){return this->getEffectRange(SUPP_RANGE);};
         addAdditionalUIElement(
             xufuTexture,
             glm::vec2(PIECE_SIZE * RenderEngine::getWindowInverseAspectRatio(), PIECE_SIZE),
@@ -30,13 +31,12 @@ public:
     }
 
 
-    //[[nodiscard]] vector<Effect_List> getCasterEffects() const override;
-    [[nodiscard]] vector<pair<int, int>> getEffectRange(Effect_List effect) const override;
-    bool passive(void* arg) override;
-    bool canEvolve(void* arg) override;
-    bool evolvedForm(void* arg) override;
-    bool SpellActivationCheck(void *arg) override;
-    void setPieceGameMode(int piece_game_mode) override;
+    [[nodiscard]] board_pattern *getEffectRange(Effect_List effect) override;
+    bool passive() override;
+    bool canEvolve() override {return evolved == false && CNT_Shield == 2;}
+    bool evolvedForm() override;
+    bool SpellActivationCheck() override;
+    bool togglePieceGameMode() override;
 
 };
 

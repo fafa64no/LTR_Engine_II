@@ -10,32 +10,30 @@
 #include "RenderEngine.h"
 #include "rendering_cfg.h"
 
-#include "Queen.h"
+#include "Pieces.h"
 
 
 class Sesshoin_Kiara final : public Queen{
-    protected :
+protected :
     int CNT_Charm = 0;
-    public:
-        Sesshoin_Kiara(int startX, int startY, bool white, Characters_List hero,
-            Pieces_List pieces_root)
-            : Queen(startX, startY, white, hero, pieces_root) {
-            addAdditionalUIElement(
-                kiaraTexture,
-                glm::vec2(PIECE_SIZE * RenderEngine::getWindowInverseAspectRatio(), PIECE_SIZE),
-                this
-            );
-        }
+public:
+    Sesshoin_Kiara(const int startX, const int startY, const bool white, const Characters_List hero)
+    : Queen(startX, startY, white, hero)  {
+        defaultEffectsRanges[CHANGE_CONTROL] = [this](){return this->getEffectRange(CHANGE_CONTROL);};
+        defaultEffectsRanges[CHANGE_CONTROL_ADVANCE] = [this](){return this->getEffectRange(CHANGE_CONTROL_ADVANCE);};
+        addAdditionalUIElement(
+            kiaraTexture,
+            glm::vec2(PIECE_SIZE * RenderEngine::getWindowInverseAspectRatio(), PIECE_SIZE),
+            this
+        );
+    }
 
-
-        //[[nodiscard]] vector<Effect_List> getCasterEffects() const override;
-        [[nodiscard]] vector<pair<int, int>> getEffectRange(Effect_List effect) const override;
-        bool passive(void* arg) override;
-        bool canEvolve(void* arg) override;
-        bool evolvedForm(void* arg) override;
-        bool SpellActivationCheck(void *arg) override;
-        void setPieceGameMode(int piece_game_mode) override;
-
+    [[nodiscard]] board_pattern *getEffectRange(Effect_List effect) override;
+    bool passive() override;
+    bool canEvolve() override;
+    bool evolvedForm() override;
+    bool SpellActivationCheck() override;
+    bool togglePieceGameMode() override;
 };
 
 
