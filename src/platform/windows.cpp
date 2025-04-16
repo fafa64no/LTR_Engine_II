@@ -117,6 +117,10 @@ LRESULT CALLBACK windows_window_callback(HWND curWindow, UINT msg, WPARAM wParam
     return result;
 }
 
+int platform_create_window(const char* title) {
+    return platform_create_window(platform_get_screen_size().x, platform_get_screen_size().y, title);
+}
+
 int platform_create_window(int width, int height, const char* title){
     HINSTANCE instance  = GetModuleHandleA(nullptr);
     WNDCLASSA wc        = {};
@@ -231,6 +235,10 @@ int platform_create_window(int width, int height, const char* title){
 
 glm::ivec2 platform_get_window_size() {
     return currentWindowSize;
+}
+
+glm::ivec2 platform_get_screen_size() {
+    return {1920, 1080};
 }
 
 glm::vec2 platform_get_mouse_position() {

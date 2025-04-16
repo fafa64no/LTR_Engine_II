@@ -35,6 +35,10 @@ void* platform_load_gl_function(const char* funName) {
     return proc;
 }
 
+int platform_create_window(const char* title) {
+    return platform_create_window(platform_get_screen_size().x, platform_get_screen_size().y, title);
+}
+
 int platform_create_window(const int width, const int height, const char* title) {
     currentWindowSize.x = width;
     currentWindowSize.y = height;
@@ -56,6 +60,11 @@ int platform_create_window(const int width, const int height, const char* title)
         0,         // border
         0          // background
     );
+
+    //window = XCreateWindow(
+    //    display,
+//
+    //);
 
     constexpr int pixelAttribs[]{
         GLX_RGBA,           True, ///TODO check if works on raspberry
@@ -118,8 +127,12 @@ int platform_create_window(const int width, const int height, const char* title)
     return EXIT_SUCCESS;
 }
 
-glm::ivec2 platform_get_window_size() {
-    return currentWindowSize;
+glm::ivec2 platform_get_window_size() { return currentWindowSize; }
+
+glm::ivec2 platform_get_screen_size() {
+    Display* disp = XOpenDisplay(nullptr);
+    Screen* screen = DefaultScreenOfDisplay(disp);
+    return {screen->width, screen->height};
 }
 
 glm::vec2 platform_get_mouse_position() { return currentMousePos; }
