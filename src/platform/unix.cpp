@@ -63,7 +63,7 @@ int platform_create_window(const int width, const int height, const char* title)
 
     //window = XCreateWindow(
     //    display,
-//
+    //
     //);
 
     constexpr int pixelAttribs[]{
