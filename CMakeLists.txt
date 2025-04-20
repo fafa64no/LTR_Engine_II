@@ -1,58 +1,34 @@
 cmake_minimum_required(VERSION 3.28.3)
-project(Chess_Grand_Order)
+project(LTR_Engine_II)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Chess_Grand_Order
-        src/main.cpp
+add_executable(LTR_Engine_II
+    src/main.cpp
 )
 
-add_compile_options(-Wno-int-to-pointer-cast)
-
 if (WIN32)
-    target_link_libraries(Chess_Grand_Order
-            opengl32
+    target_link_libraries(LTR_Engine_II
+        opengl32
     )
 elseif (UNIX)
-    target_link_libraries(Chess_Grand_Order
-            X11
-            GL
+    target_link_libraries(LTR_Engine_II
+        X11
+        GL
     )
 else ()
     message(FATAL_ERROR
-            "Unrecognized operating system"
+        "Unrecognized operating system"
     )
 endif ()
 
-target_sources(Chess_Grand_Order PRIVATE
+target_sources(LTR_Engine_II PRIVATE
         src/third_party/glcorearb.h
 )
 
-target_sources(Chess_Grand_Order PRIVATE
+target_sources(LTR_Engine_II PRIVATE
         src/game/GameEngine.cpp
-        src/game/board/Chessboard.cpp
-        src/game/board/piece_loader.cpp
-        src/game/board/board_pattern.cpp
-        src/game/characters/characters_List.cpp
-        src/game/characters/pieces/Pieces.cpp
-        src/game/characters/pieces/pieces_List.cpp
-        src/game/characters/pieces/bishop/Medusa_Saber.cpp
-        src/game/characters/pieces/king/Artoria.cpp
-        src/game/characters/pieces/knight/Ushiwakamaru.cpp
-        src/game/characters/pieces/pawn/Nemo_Marine.cpp
-        src/game/characters/pieces/queen/Sesshoin_Kiara.cpp
-        src/game/characters/pieces/rook/Arceuid.cpp
-        src/game/characters/pieces/bishop/Merlin.cpp
-        src/game/characters/pieces/knight/Okita.cpp
-        src/game/characters/pieces/rook/Xu_Fu.cpp
-        src/game/characters/pieces/queen/Nitocris_Alter.cpp
-        src/game/characters/pieces/king/Gilgamesh.cpp
-        src/game/characters/pieces/knight/Kintoki_Rider.cpp
-        src/game/characters/pieces/queen/Kukulkan.cpp
-        src/game/characters/pieces/bishop/Tamamo.cpp
-        src/game/characters/moves/piece_moves.cpp
-        src/game/effects/effects.cpp
-        src/game/effects/EffectHandler.cpp
+
         src/game/inputs/mouseInputs.cpp
         src/game/inputs/Key.cpp
         src/game/inputs/keys.cpp
@@ -61,12 +37,13 @@ target_sources(Chess_Grand_Order PRIVATE
         src/game/inputs/clickables/Button.cpp
         src/game/inputs/clickables/RadioButton.cpp
         src/game/inputs/clickables/clickables.cpp
-        src/game/phases/PhaseHandler.cpp
-        src/game/phases/event_type.cpp
+
         src/physics/PhysicsEngine.cpp
+
         src/rendering/RenderEngine.cpp
+
         src/rendering/opengl/glFunctions.cpp
-        src/rendering/opengl/glRenderer.cpp
+        src/rendering/opengl/OpenGLRenderer.cpp
         src/rendering/opengl/shading/Shader.cpp
         src/rendering/opengl/shading/shaders.cpp
         src/rendering/opengl/textures/Texture.cpp
@@ -77,37 +54,28 @@ target_sources(Chess_Grand_Order PRIVATE
         src/rendering/opengl/displayables/SpriteWithFilter.cpp
         src/rendering/opengl/displayables/SpriteGroup.cpp
         src/rendering/opengl/ui/uiElements.cpp
+
         src/utils/logging/log.cpp
         src/utils/file_io/fileIO.cpp
 )
 
 if (WIN32)
-    target_sources(Chess_Grand_Order PRIVATE
-            src/platform/windows.cpp
+    target_sources(LTR_Engine_II PRIVATE
+        src/platform/windows.cpp
     )
 elseif (UNIX)
-    target_sources(Chess_Grand_Order PRIVATE
-            src/platform/unix.cpp
+    target_sources(LTR_Engine_II PRIVATE
+        src/platform/unix.cpp
     )
 endif ()
 
-target_include_directories(Chess_Grand_Order PRIVATE
+target_include_directories(LTR_Engine_II PRIVATE
         src/game/
-        src/game/board/
-        src/game/characters/
-        src/game/characters/pieces/
-        src/game/characters/pieces/bishop/
-        src/game/characters/pieces/king/
-        src/game/characters/pieces/knight/
-        src/game/characters/pieces/pawn/
-        src/game/characters/pieces/queen/
-        src/game/characters/pieces/rook/
-        src/game/characters/moves/
-        src/game/effects/
         src/game/inputs/
         src/game/inputs/clickables/
-        src/game/phases/
+
         src/physics/
+
         src/rendering/
         src/rendering/opengl/
         src/rendering/opengl/shading/
@@ -115,11 +83,14 @@ target_include_directories(Chess_Grand_Order PRIVATE
         src/rendering/opengl/vao/
         src/rendering/opengl/displayables/
         src/rendering/opengl/ui/
+
         src/utils/
         src/utils/config/
         src/utils/logging/
         src/utils/file_io/
+
         src/platform/
+
         src/third_party/
         src/third_party/glm/
         src/third_party/glm/gtc/
@@ -128,7 +99,7 @@ target_include_directories(Chess_Grand_Order PRIVATE
 add_custom_target(copy_assets
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_LIST_DIR}/assets ${CMAKE_CURRENT_BINARY_DIR}/assets
 )
-add_dependencies(Chess_Grand_Order copy_assets)
+add_dependencies(LTR_Engine_II copy_assets)
 
 execute_process(
         COMMAND ${CMAKE_COMMAND} -E environment

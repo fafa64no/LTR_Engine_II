@@ -2,45 +2,24 @@
 // Created by sebas on 02/01/2025.
 //
 
-#include "glRenderer.h"
+#include "OpenGLRenderer.h"
 
-#include <iostream>
+#include "glFunctions.h"
+#include "platform.h"
+
 #include "log.h"
 #include "RenderEngine.h"
 #include "shaders.h"
 #include "vaos.h"
 #include "textures.h"
 #include "uiElements.h"
-#include "piece_loader.h"
 
 #include "glm.hpp"
-
+/*
 static GLuint
     frameBuffer,
     renderBuffer;
 
-static glm::ivec2 resolution;
-static glm::ivec2 maxResolution;
-
-static void APIENTRY gl_debug_callback(
-    GLenum /*source*/,
-    GLenum /*type*/,
-    GLuint /*id*/,
-    GLenum severity,
-    GLsizei /*length*/,
-    const GLchar* message,
-    const void* /*user*/
-){
-    if (
-        severity == GL_DEBUG_SEVERITY_LOW ||
-        severity == GL_DEBUG_SEVERITY_MEDIUM ||
-        severity == GL_DEBUG_SEVERITY_HIGH
-    ) {
-        ltr_log_error(message);
-    } else {
-        ltr_log_gl_info(message);
-    }
-}
 
 void glInit() {
     maxResolution = RenderEngine::getMaxWindowSize();
@@ -93,8 +72,6 @@ void glClearScreen() {
 }
 
 void glRender() {
-    resolution = RenderEngine::getWindowSize();
-    glViewport(0, 0, resolution.x, resolution.y);
     glBindFramebuffer(GL_FRAMEBUFFER,0);
     glClearScreen();
     glEnable(GL_DEPTH_TEST);
@@ -102,9 +79,82 @@ void glRender() {
 }
 
 void glRenderUI() {
-    if (!didPiecesGetInitiated) return;
     for (auto* sprite : ui_sprites) {
         if (sprite == nullptr) continue;
         sprite->draw();
     }
+}/**/
+
+OpenGLRenderer::OpenGLRenderer() {
+    this->resolution = platform_get_window_size();
+    this->screenSize = platform_get_screen_size();
+
+    load_gl_functions();
+    this->initRenderingParameters();
+
+    this->initializing = false;
+}
+
+void OpenGLRenderer::render() {
+    if (initializing) return;
+    this->refreshRenderingParameters();
+
+    this->renderSkybox();
+    this->renderWorld();
+    this->renderPostProcessing();
+    this->renderUI();
+}
+
+
+
+void OpenGLRenderer::initRenderingParameters() {
+    auto gl_debug_callback = [](
+        GLenum /*source*/,
+        GLenum /*type*/,
+        GLuint /*id*/,
+        const GLenum severity,
+        GLsizei /*length*/,
+        const GLchar* message,
+        const void* /*user*/
+    ) -> void APIENTRY {
+        if (
+            severity == GL_DEBUG_SEVERITY_LOW ||
+            severity == GL_DEBUG_SEVERITY_MEDIUM ||
+            severity == GL_DEBUG_SEVERITY_HIGH
+        ) {
+            ltr_log_error(message);
+        } else {
+            ltr_log_gl_info(message);
+        }
+    };
+    glDebugMessageCallback(gl_debug_callback,nullptr);
+    glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+    glEnable(GL_DEBUG_OUTPUT);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void OpenGLRenderer::refreshRenderingParameters() {
+    glViewport(0, 0, resolution.x, resolution.y);
+}
+
+
+
+void OpenGLRenderer::renderSkybox() {
+
+}
+
+void OpenGLRenderer::renderWorld() {
+
+}
+
+void OpenGLRenderer::renderPostProcessing() {
+
+}
+
+void OpenGLRenderer::renderUI() {
+
 }

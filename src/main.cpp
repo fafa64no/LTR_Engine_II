@@ -37,9 +37,9 @@ void waitForNextUpdate() {
     t_last = std::chrono::high_resolution_clock::now();
 }
 
-int main(int argc, char** argv) {
+int main(int /*argc*/, char** /*argv*/) {
     init();
-    while (GameEngine::getInstance()->getCurrentState() != GAME_CLOSE && get_key(KEY_ESCAPE)->isKeyUp()) {
+    while (get_key(KEY_ESCAPE)->isKeyUp()) {
         update();
         waitForNextUpdate();
     }
