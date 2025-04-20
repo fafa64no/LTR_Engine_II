@@ -43,3 +43,4 @@ dkms.conf
 # CLion project files
 .idea/*
 .vscode/*
+cmake-build-debug/*
