@@ -7,12 +7,15 @@
 
 #include "glm.hpp"
 
-void* platform_load_gl_function(char* funName);
+void* platform_load_gl_function(const char* funName);
 
+int platform_create_window(const char* title);
 int platform_create_window(int width, int height, const char* title);
 void platform_update_window();
 void platform_swap_buffers();
 glm::ivec2 platform_get_window_size();
+glm::ivec2 platform_get_screen_size();
+glm::vec2 platform_get_mouse_position();
 
 void lockMouse();
 void unlockMouse();

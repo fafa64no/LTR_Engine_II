@@ -6,15 +6,16 @@
 #include "glFunctions.h"
 
 static PFNGLCREATEPROGRAMPROC glCreateProgram_ptr;
-static PFNGLDELETETEXTURESPROC glDeleteTextures_ptr;
-static PFNGLGENTEXTURESPROC glGenTextures_ptr;
-static PFNGLBINDTEXTUREPROC glBindTexture_ptr;
-static PFNGLDRAWARRAYSPROC glDrawArrays_ptr;
+static PFNGLDELETETEXTURESEXTPROC glDeleteTextures_ptr;
+static PFNGLGENTEXTURESEXTPROC glGenTextures_ptr;
+static PFNGLBINDTEXTUREEXTPROC glBindTexture_ptr;
+static PFNGLDRAWARRAYSEXTPROC glDrawArrays_ptr;
 static PFNGLCREATESHADERPROC glCreateShader_ptr;
 static PFNGLGETUNIFORMLOCATIONPROC glGetUniformLocation_ptr;
 static PFNGLUNIFORM1FPROC glUniform1f_ptr;
 static PFNGLUNIFORM2FVPROC glUniform2fv_ptr;
 static PFNGLUNIFORM3FVPROC glUniform3fv_ptr;
+static PFNGLUNIFORM4FVPROC glUniform4fv_ptr;
 static PFNGLUNIFORM1IPROC glUniform1i_ptr;
 static PFNGLUNIFORMMATRIX4FVPROC glUniformMatrix4fv_ptr;
 static PFNGLVERTEXATTRIBDIVISORPROC glVertexAttribDivisor_ptr;
@@ -64,21 +65,22 @@ static PFNGLDELETESHADERPROC glDeleteShader_ptr;
 static PFNGLDRAWELEMENTSINSTANCEDPROC glDrawElementsInstanced_ptr;
 static PFNGLGENERATEMIPMAPPROC glGenerateMipmap_ptr;
 static PFNGLDEBUGMESSAGECALLBACKPROC glDebugMessageCallback_ptr;
-static PFNGLREADBUFFERPROC glReadBuffer_ptr;
-static PFNGLPIXELSTOREIPROC glPixelStorei_ptr;
+// static PFNGLREADBUFFERPROC glReadBuffer_ptr;
+static PFNGLPIXELSTOREXPROC glPixelStorei_ptr;
 
 void load_gl_functions() {
   // Load OpenGL Functions from the Operating System / Graphics Card
   glCreateProgram_ptr = (PFNGLCREATEPROGRAMPROC)platform_load_gl_function((char*)"glCreateProgram");
-  glDeleteTextures_ptr = (PFNGLDELETETEXTURESPROC)platform_load_gl_function((char*)"glDeleteTextures");
-  glGenTextures_ptr = (PFNGLGENTEXTURESPROC)platform_load_gl_function((char*)"glGenTextures");
-  glBindTexture_ptr = (PFNGLBINDTEXTUREPROC)platform_load_gl_function((char*)"glBindTexture");
-  glDrawArrays_ptr = (PFNGLDRAWARRAYSPROC)platform_load_gl_function((char*)"glDrawArrays");
+  glDeleteTextures_ptr = (PFNGLDELETETEXTURESEXTPROC)platform_load_gl_function((char*)"glDeleteTextures");
+  glGenTextures_ptr = (PFNGLGENTEXTURESEXTPROC)platform_load_gl_function((char*)"glGenTextures");
+  glBindTexture_ptr = (PFNGLBINDTEXTUREEXTPROC)platform_load_gl_function((char*)"glBindTexture");
+  glDrawArrays_ptr = (PFNGLDRAWARRAYSEXTPROC)platform_load_gl_function((char*)"glDrawArrays");
   glCreateShader_ptr = (PFNGLCREATESHADERPROC) platform_load_gl_function((char*)"glCreateShader");
   glGetUniformLocation_ptr = (PFNGLGETUNIFORMLOCATIONPROC) platform_load_gl_function((char*)"glGetUniformLocation");
   glUniform1f_ptr = (PFNGLUNIFORM1FPROC) platform_load_gl_function((char*)"glUniform1f");
   glUniform2fv_ptr = (PFNGLUNIFORM2FVPROC) platform_load_gl_function((char*)"glUniform2fv");
   glUniform3fv_ptr = (PFNGLUNIFORM3FVPROC) platform_load_gl_function((char*)"glUniform3fv");
+  glUniform4fv_ptr = (PFNGLUNIFORM4FVPROC) platform_load_gl_function((char*)"glUniform4fv");
   glUniform1i_ptr = (PFNGLUNIFORM1IPROC) platform_load_gl_function((char*)"glUniform1i");
   glUniformMatrix4fv_ptr = (PFNGLUNIFORMMATRIX4FVPROC) platform_load_gl_function((char*)"glUniformMatrix4fv");
   glVertexAttribDivisor_ptr = (PFNGLVERTEXATTRIBDIVISORPROC) platform_load_gl_function((char*)"glVertexAttribDivisor");
@@ -128,8 +130,8 @@ void load_gl_functions() {
   glDrawElementsInstanced_ptr = (PFNGLDRAWELEMENTSINSTANCEDPROC) platform_load_gl_function((char*)"glDrawElementsInstanced");
   glGenerateMipmap_ptr = (PFNGLGENERATEMIPMAPPROC) platform_load_gl_function((char*)"glGenerateMipmap");
   glDebugMessageCallback_ptr = (PFNGLDEBUGMESSAGECALLBACKPROC)platform_load_gl_function((char*)"glDebugMessageCallback");
-  glReadBuffer_ptr = (PFNGLREADBUFFERPROC)platform_load_gl_function((char*)"glReadBuffer");
-  glPixelStorei_ptr = (PFNGLPIXELSTOREIPROC)platform_load_gl_function((char*)"glPixelStorei");
+  // glReadBuffer_ptr = (PFNGLREADBUFFERPROC)platform_load_gl_function((char*)"glReadBuffer");
+  glPixelStorei_ptr = (PFNGLPIXELSTOREXPROC)platform_load_gl_function((char*)"glPixelStorei");
 }
 
 GLAPI GLuint APIENTRY glCreateProgram (void)
@@ -180,6 +182,11 @@ void glUniform2fv(GLint location, GLsizei count, const GLfloat* value)
 void glUniform3fv(GLint location, GLsizei count, const GLfloat* value)
 {
     glUniform3fv_ptr(location, count, value);
+}
+
+void glUniform4fv(GLint location, GLsizei count, const GLfloat* value)
+{
+    glUniform4fv_ptr(location, count, value);
 }
 
 void glUniform1i(GLint location, GLint v0)
@@ -392,9 +399,9 @@ void glDebugMessageCallback (GLDEBUGPROC callback, const void *userParam) {
   glDebugMessageCallback_ptr(callback, userParam);
 }
 
-void glReadBuffer (GLenum mode) {
-  glReadBuffer_ptr(mode);
-}
+// void glReadBuffer (GLenum mode) {
+//   glReadBuffer_ptr(mode);
+// }
 
 void glPixelStorei (GLenum pname, GLint param) {
     glPixelStorei_ptr(pname, param);

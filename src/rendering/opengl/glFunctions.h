@@ -5,11 +5,7 @@
 #ifndef GLFUNCTIONS_H
 #define GLFUNCTIONS_H
 
-#ifdef _WIN32
-#include <windows.h>
-#endif
-
-#include "glcorearb.h"
+#include "platform_opengl_header.h"
 
 void load_gl_functions();
 
@@ -32,6 +28,8 @@ void glUniform1f(GLint location, GLfloat v0);
 void glUniform2fv(GLint location, GLsizei count, const GLfloat* value);
 
 void glUniform3fv(GLint location, GLsizei count, const GLfloat* value);
+
+void glUniform4fv(GLint location, GLsizei count, const GLfloat* value);
 
 void glUniform1i(GLint location, GLint v0);
 

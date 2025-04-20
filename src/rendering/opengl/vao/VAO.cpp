@@ -4,12 +4,11 @@
 
 #include "VAO.h"
 
-#include <iostream>
-#include <ostream>
+#include "glFunctions.h"
 
 #include "log.h"
 
-VAO::VAO(const GLuint vaoID, const float buffer[], const GLsizeiptr buffer_size, const int attribConfig) {
+VAO::VAO(const unsigned int vaoID, const float buffer[], const signed long long int buffer_size, const int attribConfig) {
     this->vaoID = vaoID;
     glGenBuffers(1,&this->vboID);
     glBindVertexArray(vaoID);
@@ -19,7 +18,7 @@ VAO::VAO(const GLuint vaoID, const float buffer[], const GLsizeiptr buffer_size,
     glBindVertexArray(0);
 }
 
-VAO::VAO(const GLuint vaoID, const double buffer[], const GLsizeiptr buffer_size, const int attribConfig) {
+VAO::VAO(const unsigned int vaoID, const double buffer[], const signed long long int buffer_size, const int attribConfig) {
     this->vaoID = vaoID;
     glGenBuffers(1,&this->vboID);
     glBindVertexArray(vaoID);
@@ -61,7 +60,7 @@ void VAO::initAttributes(const int attribConfig, const GLuint dataType) {
             break;
         }
         default: {
-            log(LOG_ERROR, "VAO::initAttributes: Unsupported attrib config");
+            ltr_log_error("VAO::initAttributes: Unsupported attrib config : ", attribConfig);
         }
     }
 }
@@ -79,7 +78,7 @@ void VAO::initAttributes(const int attribCount, const int attribSize[], const GL
             dataType,
             GL_FALSE,
             totalSize,
-            (void*) currentSize
+            reinterpret_cast<void *>(currentSize)
         );
         currentSize += valueSize * attribSize[i];
     }

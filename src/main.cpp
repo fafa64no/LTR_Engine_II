@@ -1,4 +1,5 @@
 #include <chrono>
+#include <keys.h>
 
 #include "GameEngine.h"
 #include "PhysicsEngine.h"
@@ -10,9 +11,9 @@
 std::chrono::time_point<std::chrono::high_resolution_clock> t_start = std::chrono::high_resolution_clock::now();
 
 void init() {
-    GameEngine::getInstance();
     PhysicsEngine::getInstance();
     RenderEngine::getInstance();
+    GameEngine::getInstance();
 }
 
 void update() {
@@ -38,9 +39,10 @@ void waitForNextUpdate() {
 
 int main(int argc, char** argv) {
     init();
-    while (true) {
+    while (GameEngine::getInstance()->getCurrentState() != GAME_CLOSE && get_key(KEY_ESCAPE)->isKeyUp()) {
         update();
         waitForNextUpdate();
     }
     return EXIT_SUCCESS;
 }
+

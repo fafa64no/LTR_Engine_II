@@ -8,10 +8,10 @@
 #include "log.h"
 #include "RenderEngine.h"
 #include "shaders.h"
-#include "cubemaps.h"
 #include "vaos.h"
 #include "textures.h"
 #include "uiElements.h"
+#include "piece_loader.h"
 
 #include "glm.hpp"
 
@@ -23,22 +23,22 @@ static glm::ivec2 resolution;
 static glm::ivec2 maxResolution;
 
 static void APIENTRY gl_debug_callback(
-    GLenum source,
-    GLenum type,
-    GLuint id,
+    GLenum /*source*/,
+    GLenum /*type*/,
+    GLuint /*id*/,
     GLenum severity,
-    GLsizei length,
+    GLsizei /*length*/,
     const GLchar* message,
-    const void* user
+    const void* /*user*/
 ){
     if (
         severity == GL_DEBUG_SEVERITY_LOW ||
         severity == GL_DEBUG_SEVERITY_MEDIUM ||
         severity == GL_DEBUG_SEVERITY_HIGH
     ) {
-        log(LOG_ERROR, message);
+        ltr_log_error(message);
     } else {
-        log(LOG_INFO, message);
+        ltr_log_gl_info(message);
     }
 }
 
@@ -47,7 +47,6 @@ void glInit() {
     load_gl_functions();
     glInitCfg();
     initShaders();
-    loadCubeMaps();
     loadTextures();
     initVAOs();
     initUIElements();
@@ -66,12 +65,12 @@ void glInitCfg() {
 }
 
 void glInitFrameBuffers() {
-    log(LOG_INFO,"OpenGL Rendering Init Frame Buffer");
+    ltr_log_info("OpenGL Rendering Init Frame Buffer");
     // Frame Buffer
     glGenFramebuffers(1, &frameBuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
     frameTexture->useAsTarget();
-    log(LOG_INFO,"OpenGL Rendering Init Render Buffer");
+    ltr_log_info("OpenGL Rendering Init Render Buffer");
     // Render Buffer
     glGenRenderbuffers(1, &renderBuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, renderBuffer);
@@ -83,7 +82,7 @@ void glInitFrameBuffers() {
         GL_RENDERBUFFER,
         renderBuffer
     );
-    log(LOG_INFO,"OpenGL Rendering Init Check");
+    ltr_log_info("OpenGL Rendering Init Check");
     FATAL_ASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE,"Scene framebuffer incomplete");
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
@@ -95,41 +94,17 @@ void glClearScreen() {
 
 void glRender() {
     resolution = RenderEngine::getWindowSize();
-    glRenderWorld();
-    glRenderUI();
-}
-
-void glRenderSkyBox() {
-    glDepthMask(GL_FALSE);
-    skybox->use();
-    skyboxShader->use();
-    skyboxVAO->bind();
-    glDrawArrays(GL_TRIANGLES, 0, VERTEX_PER_CUBE);
-    glDepthMask(GL_TRUE);
-}
-
-void glRenderWorld() {
     glViewport(0, 0, resolution.x, resolution.y);
-    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-    glEnable(GL_DEPTH_TEST);
-    glClearScreen();
-    glRenderSkyBox();
-    ///TODO draw world displayables
     glBindFramebuffer(GL_FRAMEBUFFER,0);
-    glWorldPostProcessing();
-    glRenderUI();
-}
-
-void glWorldPostProcessing() {
     glClearScreen();
-    postProcessingShader->use();
-    quadVAO->bind();
-    frameTexture->bind();
-    glDrawArrays(GL_TRIANGLES,0,VERTEX_PER_QUAD);
+    glEnable(GL_DEPTH_TEST);
+    glRenderUI();
 }
 
 void glRenderUI() {
-    for (int i = 0; i < UI_SPRITE_COUNT; i++) {
-        ui_sprites[i]->draw();
+    if (!didPiecesGetInitiated) return;
+    for (auto* sprite : ui_sprites) {
+        if (sprite == nullptr) continue;
+        sprite->draw();
     }
 }
