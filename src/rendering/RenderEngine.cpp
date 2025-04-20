@@ -15,9 +15,10 @@ float RenderEngine::aspectRatio, RenderEngine::inverseAspectRatio;
 
 RenderEngine::RenderEngine() {
     ltr_log_info("Creating Render Engine");
-    if (platform_create_window(1920,1080,"Open Your Magic Circuit"))
+    if (platform_create_window("Open Your Magic Circuit"))
         exit(EXIT_FAILURE);
-    maxWindowSize = glm::ivec2(1920,1080);
+    maxWindowSize = platform_get_screen_size();
+    ltr_log_error("maxWindowSize ", maxWindowSize.x, " ", maxWindowSize.y);
     updateWindowSize();
     glInit();
 }
@@ -60,4 +61,9 @@ void RenderEngine::updateWindowSize() {
     windowSize = platform_get_window_size();
     aspectRatio = static_cast<float>(windowSize.x) / static_cast<float>(windowSize.y);
     inverseAspectRatio = static_cast<float>(windowSize.y) / static_cast<float>(windowSize.x);
+    ltr_log_info(
+        "Window size: ", windowSize.x, " ", windowSize.y,
+        "\n\tAspect ratio: ", aspectRatio,
+        "\n\tInverse aspect ratio: ", inverseAspectRatio
+    );
 }
