@@ -42,14 +42,15 @@ target_sources(LTR_Engine_II PRIVATE
 
         src/rendering/RenderEngine.cpp
 
+        src/rendering/objects/default_objects.cpp
+
         src/rendering/opengl/glFunctions.cpp
         src/rendering/opengl/OpenGLRenderer.cpp
+
         src/rendering/opengl/shading/Shader.cpp
-        src/rendering/opengl/shading/shaders.cpp
         src/rendering/opengl/textures/Texture.cpp
-        src/rendering/opengl/textures/textures.cpp
         src/rendering/opengl/vao/VAO.cpp
-        src/rendering/opengl/vao/vaos.cpp
+
         src/rendering/opengl/displayables/Sprite.cpp
         src/rendering/opengl/displayables/SpriteWithFilter.cpp
         src/rendering/opengl/displayables/SpriteGroup.cpp
@@ -77,6 +78,7 @@ target_include_directories(LTR_Engine_II PRIVATE
         src/physics/
 
         src/rendering/
+        src/rendering/objects/
         src/rendering/opengl/
         src/rendering/opengl/shading/
         src/rendering/opengl/textures/

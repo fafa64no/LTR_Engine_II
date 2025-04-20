@@ -8,7 +8,6 @@
 #include <SpriteGroup.h>
 #include <SpriteWithFilter.h>
 
-#include "textures.h"
 #include "rendering_cfg.h"
 #include "RenderEngine.h"
 #include "clickables.h"

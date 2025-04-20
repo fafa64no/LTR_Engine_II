@@ -14,8 +14,8 @@
 
 class VAO {
 public:
-  VAO(unsigned int vaoID, const float buffer[], signed long long int buffer_size, int attribConfig);
-  VAO(unsigned int vaoID, const double buffer[], signed long long int buffer_size, int attribConfig);
+  VAO(unsigned int vaoID, unsigned int vboID, const float buffer[], signed long long int buffer_size, int attribConfig);
+  VAO(unsigned int vaoID, unsigned int vboID, const double buffer[], signed long long int buffer_size, int attribConfig);
   void bind() const;
 private:
   unsigned int vaoID, vboID{0};

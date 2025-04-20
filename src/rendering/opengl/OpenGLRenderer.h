@@ -21,6 +21,7 @@ private:
 
     void refreshRenderingParameters();
 
+    void preparePostProcessing();
     void renderSkybox();
     void renderWorld();
     void renderPostProcessing();

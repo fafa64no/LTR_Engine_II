@@ -6,10 +6,8 @@
 
 #include <iostream>
 #include <log.h>
-#include <ostream>
 #include <ext/matrix_transform.hpp>
 
-#include "vaos.h"
 #include "glFunctions.h"
 #include "RenderEngine.h"
 
@@ -27,7 +25,6 @@ void SpriteWithFilter::draw() {
     }
     this->vao->bind();
     this->texture->bind();
-    this->shader->use();
     auto model = glm::mat4(1.0f);
     model = translate(model, this->position);
     model = scale(model, glm::vec3(this->size.x, this->size.y, 1));

@@ -7,8 +7,6 @@
 #include <iostream>
 #include <ostream>
 
-#include "vaos.h"
-#include "shaders.h"
 #include "glFunctions.h"
 #include "RenderEngine.h"
 #include "rendering_cfg.h"
@@ -16,9 +14,9 @@
 
 
 SpriteGroup::SpriteGroup(Texture* texture, int positionsSize) {
-    this->vao = quadVAO;
+    this->vao = nullptr;
     this->texture = texture;
-    this->shader = basicSpriteShaderWithFilter;
+    this->shader = nullptr;
     this->positionsSize = positionsSize;
     this->spritePositioners = static_cast<spritePositioner_type *>(malloc(positionsSize * sizeof(spritePositioner_type)));
 }
@@ -30,7 +28,6 @@ SpriteGroup::~SpriteGroup() {
 void SpriteGroup::draw() {
     this->vao->bind();
     this->texture->bind();
-    this->shader->use();
     for (int i = 0; i < this->positionCount; i++) {
         const spritePositioner_type* sp = &this->spritePositioners[i];
 

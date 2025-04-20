@@ -8,9 +8,9 @@
 
 #include "log.h"
 
-VAO::VAO(const unsigned int vaoID, const float buffer[], const signed long long int buffer_size, const int attribConfig) {
+VAO::VAO(const unsigned int vaoID, unsigned int vboID, const float buffer[], const signed long long int buffer_size, const int attribConfig) {
     this->vaoID = vaoID;
-    glGenBuffers(1,&this->vboID);
+    this->vboID = vboID;
     glBindVertexArray(vaoID);
     glBindBuffer(GL_ARRAY_BUFFER,this->vboID);
     glBufferData(GL_ARRAY_BUFFER,buffer_size,buffer,GL_STATIC_DRAW);
@@ -18,9 +18,9 @@ VAO::VAO(const unsigned int vaoID, const float buffer[], const signed long long 
     glBindVertexArray(0);
 }
 
-VAO::VAO(const unsigned int vaoID, const double buffer[], const signed long long int buffer_size, const int attribConfig) {
+VAO::VAO(const unsigned int vaoID, unsigned int vboID, const double buffer[], const signed long long int buffer_size, const int attribConfig) {
     this->vaoID = vaoID;
-    glGenBuffers(1,&this->vboID);
+    this->vboID = vboID;
     glBindVertexArray(vaoID);
     glBindBuffer(GL_ARRAY_BUFFER,this->vboID);
     glBufferData(GL_ARRAY_BUFFER,buffer_size,buffer,GL_STATIC_DRAW);

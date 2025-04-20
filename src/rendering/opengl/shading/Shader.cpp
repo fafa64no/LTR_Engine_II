@@ -48,8 +48,10 @@ Shader::Shader(const std::string& shaderName) {
     glDeleteShader(fragmentShader);
 }
 
-void Shader::use() const {
+void Shader::renderObjects() const {
     glUseProgram(programID);
+    for (const auto displayable : linkedDisplayables)
+        displayable->draw();
 }
 
 void Shader::setFloat(const std::string &name, const float value) const {
