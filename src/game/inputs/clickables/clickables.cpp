@@ -29,7 +29,7 @@ void initClickables() {
         [](const glm::vec2 pos) {
             auto posInBoard = glm::ivec2();
             posInBoard.x = floor(BOARD_SIZE * pos.x);
-            posInBoard.y = floor(BOARD_SIZE * (1 -pos.y));
+            posInBoard.y = floor(BOARD_SIZE * (1 - pos.y));
             GameEngine::getInstance()->clickBoardAtPos(posInBoard.y, posInBoard.x);
             return true;
         }
