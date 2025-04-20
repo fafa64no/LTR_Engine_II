@@ -42,9 +42,4 @@ void RenderEngine::updateWindowSize() {
     windowSize = platform_get_window_size();
     aspectRatio         = static_cast<float>(windowSize.x) / static_cast<float>(windowSize.y);
     inverseAspectRatio  = static_cast<float>(windowSize.y) / static_cast<float>(windowSize.x);
-    // ltr_log_info(
-    //     "Window size: ", windowSize.x, " ", windowSize.y,
-    //     "\n\tAspect ratio: ", aspectRatio,
-    //     "\n\tInverse aspect ratio: ", inverseAspectRatio
-    // );
 }

@@ -9,7 +9,7 @@
 #include <VAO.h>
 #include <Shader.h>
 
-#include "Displayable.h"
+#include "../../displayables/Displayable.h"
 #include "SpriteTarget.h"
 
 class Sprite : public Displayable {

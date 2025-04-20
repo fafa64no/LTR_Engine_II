@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-#include "Displayable.h"
+#include "../../displayables/Displayable.h"
 #include "glm.hpp"
 
 #define MAX_SHADER_SIZE 4096

@@ -5,7 +5,7 @@
 #ifndef SPRITEGROUP_H
 #define SPRITEGROUP_H
 
-#include <Displayable.h>
+#include <../../displayables/Displayable.h>
 #include <rendering_cfg.h>
 #include <Texture.h>
 #include <VAO.h>

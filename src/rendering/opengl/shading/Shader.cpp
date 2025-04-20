@@ -22,8 +22,8 @@ Shader::Shader(const std::string& shaderName) {
     char* fragmentCode = readFile(fragmentPath);
 
     GLint shaderLength[2];
-    shaderLength[0] = (GLint)strlen(vertexCode);
-    shaderLength[1] = (GLint)strlen(fragmentCode);
+    shaderLength[0] = static_cast<GLint>(strlen(vertexCode));
+    shaderLength[1] = static_cast<GLint>(strlen(fragmentCode));
 
     const GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
     const GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);

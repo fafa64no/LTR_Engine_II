@@ -59,6 +59,8 @@ void load_default_VAOs();
 void load_default_textures();
 void load_default_shaders();
 
+void load_default_cameras();
+
 void load_debug_stuff();
 
 #endif //DEFAULT_OBJECTS_H

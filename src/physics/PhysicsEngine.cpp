@@ -6,8 +6,11 @@
 
 #include <log.h>
 
+#include "default_nodes.h"
+
 PhysicsEngine::PhysicsEngine() {
     ltr_log_info("Creating Physics Engine");
+    load_default_nodes();
 }
 
 PhysicsEngine::~PhysicsEngine() {

@@ -28,6 +28,7 @@ OpenGLRenderer::OpenGLRenderer() {
 void OpenGLRenderer::render() {
     if (initializing) return;
     this->refreshRenderingParameters();
+    this->preparePostProcessing();
 
     this->renderSkybox();
     this->renderWorld();
@@ -69,6 +70,8 @@ void OpenGLRenderer::initRenderingParameters() {
 
 void OpenGLRenderer::refreshRenderingParameters() {
     glViewport(0, 0, resolution.x, resolution.y);
+    glClearColor(0.0f, 0.0f, 0.2f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 

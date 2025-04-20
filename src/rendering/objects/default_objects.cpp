@@ -4,10 +4,13 @@
 
 #include "default_objects.h"
 
+#include "Camera.h"
 #include "default_arrays.h"
+#include "default_nodes.h"
 
 #include "glFunctions.h"
 #include "Texture.h"
+#include "displayables/TexturedMesh.h"
 
 
 VAO* quad_VAO;
@@ -21,10 +24,14 @@ Shader* world_shaders[WORLD_SHADER_COUNT];
 Shader* postprocessing_shaders[POSTPROCESSING_SHADER_COUNT];
 Shader* ui_shaders[UI_SHADER_COUNT];
 
+Camera* free_cam;
+
 void load_default_objects() {
     load_default_VAOs();
     load_default_textures();
     load_default_shaders();
+
+    load_default_cameras();
 
     load_debug_stuff();
 }
@@ -58,8 +65,23 @@ void load_default_shaders() {
 
 
 
-void load_debug_stuff() {
+void load_default_cameras() {
+    free_cam = new Camera(
+        free_cam_node,
+        glm::vec3(0.0f, 0.0f, -1.0f),
+        glm::vec3(0.0f, 1.0f,  0.0f)
+    );
+}
 
+
+
+void load_debug_stuff() {
+    new TexturedMesh(
+        world_shaders[WORLD_SHADER_DEFAULT_MESH],
+        cube_VAO,
+        farid_texture,
+        world_origin_node
+    );
 }
 
 

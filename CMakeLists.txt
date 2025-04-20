@@ -39,8 +39,13 @@ target_sources(LTR_Engine_II PRIVATE
         src/game/inputs/clickables/clickables.cpp
 
         src/physics/PhysicsEngine.cpp
+        src/physics/nodes/Node.cpp
+        src/physics/objects/default_nodes.cpp
 
         src/rendering/RenderEngine.cpp
+        src/rendering/Camera.cpp
+
+        src/rendering/displayables/TexturedMesh.cpp
 
         src/rendering/objects/default_objects.cpp
 
@@ -76,8 +81,11 @@ target_include_directories(LTR_Engine_II PRIVATE
         src/game/inputs/clickables/
 
         src/physics/
+        src/physics/nodes/
+        src/physics/objects/
 
         src/rendering/
+        src/rendering/displayables/
         src/rendering/objects/
         src/rendering/opengl/
         src/rendering/opengl/shading/
