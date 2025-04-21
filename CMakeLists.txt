@@ -10,11 +10,18 @@ add_executable(LTR_Engine_II
 if (WIN32)
     target_link_libraries(LTR_Engine_II
         opengl32
+        glfw3
+    )
+    target_sources(LTR_Engine_II PRIVATE
+            src/platform/windows.cpp
     )
 elseif (UNIX)
     target_link_libraries(LTR_Engine_II
-        X11
         GL
+        glfw3
+    )
+    target_sources(LTR_Engine_II PRIVATE
+            src/platform/unix.cpp
     )
 else ()
     message(FATAL_ERROR
@@ -23,7 +30,7 @@ else ()
 endif ()
 
 target_sources(LTR_Engine_II PRIVATE
-        src/third_party/glcorearb.h
+        src/third_party/glad/src/glad.c
 )
 
 target_sources(LTR_Engine_II PRIVATE
@@ -50,7 +57,7 @@ target_sources(LTR_Engine_II PRIVATE
 
         src/rendering/objects/default_objects.cpp
 
-        src/rendering/opengl/glFunctions.cpp
+        # src/rendering/opengl/glFunctions.cpp
         src/rendering/opengl/OpenGLRenderer.cpp
 
         src/rendering/opengl/shading/Shader.cpp
@@ -64,17 +71,9 @@ target_sources(LTR_Engine_II PRIVATE
 
         src/utils/logging/log.cpp
         src/utils/file_io/fileIO.cpp
-)
 
-if (WIN32)
-    target_sources(LTR_Engine_II PRIVATE
-        src/platform/windows.cpp
-    )
-elseif (UNIX)
-    target_sources(LTR_Engine_II PRIVATE
-        src/platform/unix.cpp
-    )
-endif ()
+        # src/third_party/glad/src/glad.c
+)
 
 target_include_directories(LTR_Engine_II PRIVATE
         src/game/
@@ -103,6 +102,14 @@ target_include_directories(LTR_Engine_II PRIVATE
         src/platform/
 
         src/third_party/
+        src/third_party/glad/
+        src/third_party/glad/include/
+        src/third_party/glad/include/glad/
+        src/third_party/glad/include/KHR/
+        src/third_party/glad/src/
+        src/third_party/glfw/
+        src/third_party/glfw/include/
+        src/third_party/glfw/include/GLFW/
         src/third_party/glm/
         src/third_party/glm/gtc/
 )

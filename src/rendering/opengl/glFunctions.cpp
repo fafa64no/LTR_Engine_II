@@ -6,10 +6,10 @@
 #include "glFunctions.h"
 
 static PFNGLCREATEPROGRAMPROC glCreateProgram_ptr;
-static PFNGLDELETETEXTURESEXTPROC glDeleteTextures_ptr;
-static PFNGLGENTEXTURESEXTPROC glGenTextures_ptr;
-static PFNGLBINDTEXTUREEXTPROC glBindTexture_ptr;
-static PFNGLDRAWARRAYSEXTPROC glDrawArrays_ptr;
+static PFNGLDELETETEXTURESPROC glDeleteTextures_ptr;
+static PFNGLGENTEXTURESPROC glGenTextures_ptr;
+static PFNGLBINDTEXTUREPROC glBindTexture_ptr;
+static PFNGLDRAWARRAYSPROC glDrawArrays_ptr;
 static PFNGLCREATESHADERPROC glCreateShader_ptr;
 static PFNGLGETUNIFORMLOCATIONPROC glGetUniformLocation_ptr;
 static PFNGLUNIFORM1FPROC glUniform1f_ptr;
@@ -66,7 +66,7 @@ static PFNGLDRAWELEMENTSINSTANCEDPROC glDrawElementsInstanced_ptr;
 static PFNGLGENERATEMIPMAPPROC glGenerateMipmap_ptr;
 static PFNGLDEBUGMESSAGECALLBACKPROC glDebugMessageCallback_ptr;
 // static PFNGLREADBUFFERPROC glReadBuffer_ptr;
-static PFNGLPIXELSTOREXPROC glPixelStorei_ptr;
+static PFNGLPIXELSTOREIPROC glPixelStorei_ptr;
 
 static bool gl_functions_loaded = false;
 
@@ -75,10 +75,10 @@ void load_gl_functions() {
     gl_functions_loaded = true;
     // Load OpenGL Functions from the Operating System / Graphics Card
     glCreateProgram_ptr = (PFNGLCREATEPROGRAMPROC)platform_load_gl_function((char*)"glCreateProgram");
-    glDeleteTextures_ptr = (PFNGLDELETETEXTURESEXTPROC)platform_load_gl_function((char*)"glDeleteTextures");
-    glGenTextures_ptr = (PFNGLGENTEXTURESEXTPROC)platform_load_gl_function((char*)"glGenTextures");
-    glBindTexture_ptr = (PFNGLBINDTEXTUREEXTPROC)platform_load_gl_function((char*)"glBindTexture");
-    glDrawArrays_ptr = (PFNGLDRAWARRAYSEXTPROC)platform_load_gl_function((char*)"glDrawArrays");
+    glDeleteTextures_ptr = (PFNGLDELETETEXTURESPROC)platform_load_gl_function((char*)"glDeleteTextures");
+    glGenTextures_ptr = (PFNGLGENTEXTURESPROC)platform_load_gl_function((char*)"glGenTextures");
+    glBindTexture_ptr = (PFNGLBINDTEXTUREPROC)platform_load_gl_function((char*)"glBindTexture");
+    glDrawArrays_ptr = (PFNGLDRAWARRAYSPROC)platform_load_gl_function((char*)"glDrawArrays");
     glCreateShader_ptr = (PFNGLCREATESHADERPROC) platform_load_gl_function((char*)"glCreateShader");
     glGetUniformLocation_ptr = (PFNGLGETUNIFORMLOCATIONPROC) platform_load_gl_function((char*)"glGetUniformLocation");
     glUniform1f_ptr = (PFNGLUNIFORM1FPROC) platform_load_gl_function((char*)"glUniform1f");
@@ -135,7 +135,7 @@ void load_gl_functions() {
     glGenerateMipmap_ptr = (PFNGLGENERATEMIPMAPPROC) platform_load_gl_function((char*)"glGenerateMipmap");
     glDebugMessageCallback_ptr = (PFNGLDEBUGMESSAGECALLBACKPROC)platform_load_gl_function((char*)"glDebugMessageCallback");
     // glReadBuffer_ptr = (PFNGLREADBUFFERPROC)platform_load_gl_function((char*)"glReadBuffer");
-    glPixelStorei_ptr = (PFNGLPIXELSTOREXPROC)platform_load_gl_function((char*)"glPixelStorei");
+    glPixelStorei_ptr = (PFNGLPIXELSTOREIPROC)platform_load_gl_function((char*)"glPixelStorei");
 }
 
 GLAPI GLuint APIENTRY glCreateProgram (void)

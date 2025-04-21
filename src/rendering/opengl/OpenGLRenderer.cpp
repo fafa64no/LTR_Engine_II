@@ -17,8 +17,10 @@ OpenGLRenderer::OpenGLRenderer() {
     this->resolution = platform_get_window_size();
     this->screenSize = platform_get_screen_size();
 
-    load_gl_functions();
+    // load_gl_functions();
+    ltr_log_debug("JE SUIS TRES GENTIL");
     this->initRenderingParameters();
+    ltr_log_debug("J'AI UN PTIT TRUC EN PLUS");
 
     load_default_objects();
 
@@ -63,8 +65,11 @@ void OpenGLRenderer::initRenderingParameters() {
             ltr_log_gl_info(message);
         }
     };
+    ltr_log_debug("AGROU AGROU");
     glDebugMessageCallback(gl_debug_callback,nullptr);
+    ltr_log_debug("AGREU AGREU");
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+    ltr_log_debug("AGNOPILTOR AGROU");
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);

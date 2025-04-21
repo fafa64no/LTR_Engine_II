@@ -5,6 +5,9 @@
 #ifndef GLFUNCTIONS_H
 #define GLFUNCTIONS_H
 
+#include <glad.h>
+
+/*
 #include "platform_opengl_header.h"
 
 void load_gl_functions();
@@ -132,5 +135,5 @@ void glDebugMessageCallback (GLDEBUGPROC callback, const void *userParam);
 void glReadBuffer (GLenum mode);
 
 void glPixelStorei (GLenum pname, GLint param);
-
+*/
 #endif //GLFUNCTIONS_H

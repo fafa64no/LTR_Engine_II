@@ -17,7 +17,9 @@ RenderEngine::RenderEngine() {
     maxWindowSize = platform_get_screen_size();
     ltr_log_info(CONSOLE_COLOR_LIGHT_YELLOW, "Max window size : ", maxWindowSize.x, " ", maxWindowSize.y);
     updateWindowSize();
+    ltr_log_debug("AGNEUGNEU");
     renderer = new OpenGLRenderer();
+    ltr_log_debug("MA MAMAN DDIT CHUI GENTIL");
 }
 
 RenderEngine::~RenderEngine() {
