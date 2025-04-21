@@ -22,6 +22,11 @@ OpenGLRenderer::OpenGLRenderer() {
 
     load_default_objects();
 
+    const GLubyte* renderer = glGetString(GL_RENDERER);
+    const GLubyte* vendor = glGetString(GL_VENDOR);
+
+    ltr_log_gl_info("renderer: ", renderer, ", vendor: ", vendor);
+
     this->initializing = false;
 }
 

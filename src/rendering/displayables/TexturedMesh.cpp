@@ -4,6 +4,9 @@
 
 #include "TexturedMesh.h"
 
+#include <glm/gtx/string_cast.hpp>
+
+#include "default_objects.h"
 #include "glFunctions.h"
 #include "log.h"
 #include "RenderEngine.h"
@@ -26,6 +29,8 @@ void TexturedMesh::draw() {
     }
     this->vao->bind();
     this->texture->bind();
+    // ltr_log_debug(glm::to_string(modelTransform));
+    this->shader->setMat4("view", free_cam->getViewMatrix());
     this->shader->setMat4("model", modelTransform);
     glDrawArrays(GL_TRIANGLES, 0, VERTEX_PER_CUBE);
 }

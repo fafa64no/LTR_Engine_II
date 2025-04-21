@@ -80,7 +80,7 @@ void load_debug_stuff() {
         world_shaders[WORLD_SHADER_DEFAULT_MESH],
         cube_VAO,
         farid_texture,
-        world_origin_node
+        debug_pos_node
     );
 }
 

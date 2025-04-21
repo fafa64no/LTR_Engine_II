@@ -40,6 +40,7 @@ target_sources(LTR_Engine_II PRIVATE
 
         src/physics/PhysicsEngine.cpp
         src/physics/nodes/Node.cpp
+        src/physics/nodes/ControllableNode.cpp
         src/physics/objects/default_nodes.cpp
 
         src/rendering/RenderEngine.cpp

@@ -8,6 +8,7 @@
 #include "Node.h"
 
 extern Node* world_origin_node;
+extern Node* debug_pos_node;
 extern Node* free_cam_node;
 
 void load_default_nodes();

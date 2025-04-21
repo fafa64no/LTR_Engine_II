@@ -45,7 +45,6 @@ int platform_create_window(const int width, const int height, const char* title)
 
     display = XOpenDisplay(nullptr);
     if (!display) {
-        display = XOpenDisplay(nullptr);
         ltr_log_fatal("platform_create_window: Failed to get display");
         return EXIT_FAILURE;
     }
@@ -76,12 +75,14 @@ int platform_create_window(const int width, const int height, const char* title)
     };
 
     int fbcCount = 0;
+    ltr_log_gl_info("Here");
     const GLXFBConfig* fbc = glXChooseFBConfig(
         display,
         DefaultScreen(display),
         pixelAttribs,
         &fbcCount
     );
+    ltr_log_gl_info("Here");
     if (!fbc) {
         ltr_log_fatal("platform_create_window: Failed to create GLX framebuffer config");
         return EXIT_FAILURE;

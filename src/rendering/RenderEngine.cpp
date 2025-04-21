@@ -25,9 +25,8 @@ RenderEngine::~RenderEngine() {
 }
 
 RenderEngine* RenderEngine::getInstance() {
-    if (instance == nullptr) {
+    if (instance == nullptr)
         instance = new RenderEngine();
-    }
     return instance;
 }
 

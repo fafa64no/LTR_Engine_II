@@ -10,7 +10,7 @@
 class Camera {
 public:
     Camera(Node* parent, glm::vec3 camUp, glm::vec3 camFront);
-    glm::mat4 getViewMatrix() const;
+    [[nodiscard]] glm::mat4 getViewMatrix() const;
 private:
     Node* parent;
     glm::vec3 camUp{};

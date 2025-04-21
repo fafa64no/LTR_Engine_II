@@ -8,6 +8,9 @@
 #include "VAO.h"
 #include "Texture.h"
 #include "Shader.h"
+#include "Camera.h"
+
+
 
 enum vao_type{
     VAO_QUAD,
@@ -52,6 +55,8 @@ extern Shader* skybox_shaders[SKYBOX_SHADER_COUNT];
 extern Shader* world_shaders[WORLD_SHADER_COUNT];
 extern Shader* postprocessing_shaders[POSTPROCESSING_SHADER_COUNT];
 extern Shader* ui_shaders[UI_SHADER_COUNT];
+
+extern Camera* free_cam;
 
 void load_default_objects();
 
